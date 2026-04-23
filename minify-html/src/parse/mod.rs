@@ -162,17 +162,19 @@ impl<'c> Code<'c> {
     let mut internal_next = self.next;
 
     loop {
-      if self
-        .code
-        .get(internal_next..internal_next + seq.len())
-        .filter(|n| n.eq_ignore_ascii_case(seq))
-        .is_some()
-      {
-        break;
-      }
+      match self.code.get(internal_next..internal_next + seq.len()) {
+        Some(n) if !n.eq_ignore_ascii_case(seq) => {
+          len += 1;
+          internal_next += 1;
+        }
+        None => {
+          // prevent out-of-range panic in slice_and_shift()
+          len = len.min(self.rem() - seq.len());
 
-      len += 1;
-      internal_next += 1;
+          break;
+        }
+        _ => break,
+      }
     }
     self.slice_and_shift(len + seq.len())
   }
