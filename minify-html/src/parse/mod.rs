@@ -157,6 +157,26 @@ impl<'c> Code<'c> {
     last
   }
 
+  pub fn slice_and_shift_while_not_seq_case_insensitive(&mut self, seq: &[u8]) -> &[u8] {
+    let mut len = 0;
+    let mut internal_next = self.next;
+
+    loop {
+      if self
+        .code
+        .get(internal_next..internal_next + seq.len())
+        .filter(|n| n.eq_ignore_ascii_case(seq))
+        .is_some()
+      {
+        break;
+      }
+
+      len += 1;
+      internal_next += 1;
+    }
+    self.slice_and_shift(len + seq.len())
+  }
+
   pub fn rem(&self) -> usize {
     self.code.len() - self.next
   }
