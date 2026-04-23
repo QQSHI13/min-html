@@ -87,22 +87,29 @@ pub fn parse_tag(code: &mut Code) -> ParsedTag {
 
     if code.opts.treat_brace_as_opaque {
       template_enclosures.extend_from_slice(&[
-        ("{{ ".as_bytes(), "}} ".as_bytes()),
-        ("{% ".as_bytes(), "%} ".as_bytes()),
-        ("{# ".as_bytes(), "#} ".as_bytes()),
+        ("{{".as_bytes(), "}}".as_bytes()),
+        ("{%".as_bytes(), "%}".as_bytes()),
+        ("{#".as_bytes(), "#}".as_bytes()),
       ]);
     }
 
     if code.opts.treat_chevron_percent_as_opaque {
-      template_enclosures.push(("<% ".as_bytes(), "%> ".as_bytes()));
+      template_enclosures.push(("<%".as_bytes(), "%>".as_bytes()));
     }
 
     let mut template_attr_name = false;
     for (opening, closing) in template_enclosures {
       if code.shift_if_next_seq_case_insensitive(opening) {
         let _ = attr_name.write(opening);
-        let rem = code.slice_and_shift_while_not_seq_case_insensitive(closing);
-        attr_name.extend_from_slice(&rem[..rem.len() - 1]); // skip the whitespace at the end
+        loop {
+          attr_name.extend_from_slice(code.slice_and_shift_while_not_seq_case_insensitive(closing));
+
+          // the template syntax closing word should be followed by a whitespace or the end of the tag (i.e. '>' or '/>')
+          match code.shift_if_next_not_in_lookup(WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_CHEVRON) {
+            Some(c) => attr_name.push(c),
+            None => break,
+          }
+        }
         template_attr_name = true;
         break;
       }
