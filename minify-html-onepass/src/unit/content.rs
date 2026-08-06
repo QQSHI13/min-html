@@ -148,7 +148,17 @@ pub fn process_content(
         let tag_name = proc
           .m(WhileInLookup(TAG_NAME_CHAR), Discard)
           .require("tag name")?;
-        proc.make_lowercase(tag_name);
+        // SVG is foreign content: element and attribute names are case-sensitive.
+        // An `svg` element enters the SVG namespace (case-insensitive match);
+        // inside it keep the author's casing, otherwise lowercase like HTML.
+        let tag_ns = if proc[tag_name].eq_ignore_ascii_case(b"svg") {
+          Namespace::Svg
+        } else {
+          ns
+        };
+        if tag_ns == Namespace::Html {
+          proc.make_lowercase(tag_name);
+        }
 
         if can_omit_as_before(proc.get_or_empty(parent), &proc[tag_name]) {
           // TODO Is this necessary? Can a previous closing tag even exist?

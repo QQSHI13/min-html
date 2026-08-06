@@ -43,8 +43,7 @@ fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) -> (
 }
 
 #[test]
-fn test_common() {
-  for (a, b) in create_common_test_data() {
+fn test_common() {  for (a, b) in create_common_test_data() {
     eval(a, b);
   }
   for (a, b) in create_common_noncompliant_test_data() {
@@ -231,4 +230,21 @@ fn test_style_attr_minification() {
   );
   // `style` attributes are removed if fully minified away.
   eval_with_css_min(br#"<div style="  /*  */   "></div>"#, br#"<div></div>"#);
+}
+
+#[test]
+fn test_svg_foreign_content_case_preserved() {
+  // SVG is foreign content: attribute and element names are case-sensitive.
+  // minify-html must not lowercase viewBox / preserveAspectRatio / camelCase
+  // element names inside <svg>.
+  eval(
+    b"<svg viewBox=\"0 0 24 24\" preserveAspectRatio=\"xMidYMid meet\"><linearGradient></linearGradient></svg>",
+    br#"<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><linearGradient></linearGradient></svg>"#,
+  );
+}
+
+#[test]
+fn test_html_attributes_still_lowercased() {
+  // Regular HTML attribute names stay case-insensitive and lowercased.
+  eval(b"<DIV DATA-FOO=\"1\" CLASS=x></DIV>", b"<div class=x data-foo=1></div>");
 }

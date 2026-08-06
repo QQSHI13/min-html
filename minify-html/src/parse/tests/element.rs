@@ -25,7 +25,7 @@ fn test_parse_tag() {
 				 =
 			"password"  "a"  = "  b  "   :cd  /e /=fg 	= /\h /i/ /j/k/l m=n=o q==\r/s/ / t] = /u  / w=//>"###,
   );
-  let tag = parse_tag(&mut code);
+  let tag = parse_tag(&mut code, Namespace::Html);
   assert_eq!(tag, ParsedTag {
     attributes: {
       let mut map = AHashMap::<Vec<u8>, AttrVal>::default();
@@ -47,6 +47,35 @@ fn test_parse_tag() {
     name: b"input".to_vec(),
     self_closing: false,
   });
+}
+
+#[test]
+fn test_parse_svg_preserves_case() {
+  // SVG is foreign content: element and attribute names are case-sensitive.
+  let mut code = Code::new(
+    br###"<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><linearGradient></linearGradient></svg>"###,
+  );
+  let elem = parse_element(&mut code, Namespace::Html, EMPTY_SLICE);
+  let NodeData::Element {
+    attributes,
+    children,
+    name,
+    namespace,
+    ..
+  } = elem
+  else {
+    panic!("expected element");
+  };
+  assert_eq!(name, b"svg".to_vec());
+  assert_eq!(namespace, Namespace::Svg);
+  assert!(attributes.contains_key(b"viewBox".as_ref()));
+  assert!(attributes.contains_key(b"preserveAspectRatio".as_ref()));
+  assert!(!attributes.contains_key(b"viewbox".as_ref()));
+  let NodeData::Element { name, namespace, .. } = &children[0] else {
+    panic!("expected child element");
+  };
+  assert_eq!(name.as_slice(), b"linearGradient");
+  assert_eq!(*namespace, Namespace::Svg);
 }
 
 #[test]
