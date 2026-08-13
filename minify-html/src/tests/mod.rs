@@ -2,14 +2,13 @@ use crate::cfg::Cfg;
 use crate::minify;
 #[cfg(feature = "lightningcss")]
 use minify_html_common::tests::create_common_css_test_data;
-#[cfg(feature = "minify-js")]
 use minify_html_common::tests::create_common_js_test_data;
 use minify_html_common::tests::create_common_noncompliant_test_data;
 use minify_html_common::tests::create_common_test_data;
 use std::str::from_utf8;
 
 pub fn eval_with_cfg(src: &'static [u8], expected: &'static [u8], cfg: &Cfg) {
-  let min = minify(&src, cfg);
+  let min = minify(src, cfg);
   assert_eq!(from_utf8(&min).unwrap(), from_utf8(expected).unwrap(),);
 }
 
@@ -19,30 +18,35 @@ pub fn eval_with_noncompliant(src: &'static [u8], expected: &'static [u8]) {
   eval_with_cfg(src, expected, &cfg)
 }
 
-#[cfg(feature = "minify-js")]
-pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_js = true;
+pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_js: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
 #[cfg(feature = "lightningcss")]
-pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_css = true;
+pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_css: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
 pub fn eval(src: &'static [u8], expected: &'static [u8]) {
-  let mut cfg = Cfg::new();
   // Most common tests assume the following minifications aren't done.
-  cfg.keep_html_and_head_opening_tags = true;
-  cfg.allow_optimal_entities = true;
+  let cfg = Cfg {
+    keep_html_and_head_opening_tags: true,
+    allow_optimal_entities: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
 // NOTE: This is different to `eval` as that enables `keep_html_and_head_opening_tags`.
-fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) -> () {
+fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) {
   eval_with_cfg(src, expected, &Cfg::new());
 }
 
@@ -58,7 +62,6 @@ fn test_common() {
   for (a, b) in create_common_css_test_data() {
     eval_with_css_min(a, b);
   }
-  #[cfg(feature = "minify-js")]
   for (a, b) in create_common_js_test_data() {
     eval_with_js_min(a, b);
   }
@@ -67,28 +70,33 @@ fn test_common() {
 #[test]
 fn test_keep_ssi_comments() {
   eval(b"<!--#include >", b"");
-  let mut cfg = Cfg::default();
-  cfg.keep_ssi_comments = true;
+  let cfg = Cfg {
+    keep_ssi_comments: true,
+    ..Default::default()
+  };
   eval_with_cfg(b"<!--#include >", b"<!--#include >", &cfg);
 }
 
 #[test]
 fn test_keep_input_type_text_attr() {
   eval(b"<input type=\"text\">", b"<input>");
-  let mut cfg = Cfg::default();
-  cfg.keep_input_type_text_attr = true;
+  let cfg = Cfg {
+    keep_input_type_text_attr: true,
+    ..Default::default()
+  };
   eval_with_cfg(b"<input type=\"TExt\">", b"<input type=text>", &cfg);
 }
 
 #[test]
 fn test_preserve_template_brace_syntax() {
-  #[cfg(feature = "minify-js")]
   eval_with_js_min(
     b"<p> {{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }} </p>",
-    b"<p>{{ hello world! %} {%}{#} echo '<p><script>let x=1",
+    b"<p>{{ hello world! %} {%}{#} echo '<p><script>let x=1;",
   );
-  let mut cfg = Cfg::default();
-  cfg.preserve_brace_template_syntax = true;
+  let cfg = Cfg {
+    preserve_brace_template_syntax: true,
+    ..Default::default()
+  };
   eval_with_cfg(
     b"<p> {{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }} </p>",
     b"<p>{{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }}",
@@ -108,8 +116,10 @@ fn test_preserve_template_brace_syntax() {
 
 #[test]
 fn test_preserve_template_chevron_percent_syntax() {
-  let mut cfg = Cfg::default();
-  cfg.preserve_chevron_percent_template_syntax = true;
+  let cfg = Cfg {
+    preserve_chevron_percent_template_syntax: true,
+    ..Default::default()
+  };
   eval_with_cfg(
     b"<p> <%   hello    world! #}  {#}{# echo '  </p><P><script>  let x = 1; //'  %> </p>",
     b"<p><%   hello    world! #}  {#}{# echo '  </p><P><script>  let x = 1; //'  %>",
@@ -239,4 +249,24 @@ fn test_style_attr_minification() {
   );
   // `style` attributes are removed if fully minified away.
   eval_with_css_min(br#"<div style="  /*  */   "></div>"#, br#"<div></div>"#);
+}
+
+#[test]
+fn test_svg_foreign_content_case_preserved() {
+  // SVG is foreign content: attribute and element names are case-sensitive.
+  // minify-html must not lowercase viewBox / preserveAspectRatio / camelCase
+  // element names inside <svg>.
+  eval(
+    b"<svg viewBox=\"0 0 24 24\" preserveAspectRatio=\"xMidYMid meet\"><linearGradient></linearGradient></svg>",
+    br#"<svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><linearGradient></linearGradient></svg>"#,
+  );
+}
+
+#[test]
+fn test_html_attributes_still_lowercased() {
+  // Regular HTML attribute names stay case-insensitive and lowercased.
+  eval(
+    b"<DIV DATA-FOO=\"1\" CLASS=x></DIV>",
+    b"<div class=x data-foo=1></div>",
+  );
 }

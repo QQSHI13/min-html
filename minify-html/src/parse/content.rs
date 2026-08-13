@@ -136,10 +136,10 @@ fn build_content_type_matcher(
   (
     AhoCorasickBuilder::new()
       .ascii_case_insensitive(true)
-      .dfa(true)
       .match_kind(MatchKind::LeftmostLongest)
       // Keep in sync with order of CONTENT_TYPE_FROM_PATTERN.
-      .build(patterns),
+      .build(patterns)
+      .unwrap(),
     types,
   )
 }
@@ -153,26 +153,14 @@ static CONTENT_TYPE_MATCHER_OPAQUE_CP: Lazy<(AhoCorasick, Vec<ContentType>)> =
 static CONTENT_TYPE_MATCHER_OPAQUE_BRACE_CP: Lazy<(AhoCorasick, Vec<ContentType>)> =
   Lazy::new(|| build_content_type_matcher(true, true));
 
-static CLOSING_BRACE_BRACE: Lazy<AhoCorasick> = Lazy::new(|| {
-  AhoCorasickBuilder::new()
-    .dfa(true)
-    .build(["}}"])
-});
-static CLOSING_BRACE_HASH: Lazy<AhoCorasick> = Lazy::new(|| {
-  AhoCorasickBuilder::new()
-    .dfa(true)
-    .build(["#}"])
-});
-static CLOSING_BRACE_PERCENT: Lazy<AhoCorasick> = Lazy::new(|| {
-  AhoCorasickBuilder::new()
-    .dfa(true)
-    .build(["%}"])
-});
-static CLOSING_CHEVRON_PERCENT: Lazy<AhoCorasick> = Lazy::new(|| {
-  AhoCorasickBuilder::new()
-    .dfa(true)
-    .build(["%>"])
-});
+static CLOSING_BRACE_BRACE: Lazy<AhoCorasick> =
+  Lazy::new(|| AhoCorasickBuilder::new().build(["}}"]).unwrap());
+static CLOSING_BRACE_HASH: Lazy<AhoCorasick> =
+  Lazy::new(|| AhoCorasickBuilder::new().build(["#}"]).unwrap());
+static CLOSING_BRACE_PERCENT: Lazy<AhoCorasick> =
+  Lazy::new(|| AhoCorasickBuilder::new().build(["%}"]).unwrap());
+static CLOSING_CHEVRON_PERCENT: Lazy<AhoCorasick> =
+  Lazy::new(|| AhoCorasickBuilder::new().build(["%>"]).unwrap());
 
 pub struct ParsedContent {
   pub children: Vec<NodeData>,
@@ -225,14 +213,16 @@ pub fn parse_content(
       } else if name.is_empty() {
         // Malformed code, drop until and including next `>`.
         typ = MalformedLeftChevronSlash;
-      } else if grandparent == name.as_slice() && can_omit_as_last_node(grandparent, parent) {
+      } else if grandparent.eq_ignore_ascii_case(&name)
+        && can_omit_as_last_node(grandparent, parent)
+      {
         // The upcoming closing tag implicitly closes the current element e.g. `<tr><td>(current position)</tr>`.
         // This DOESN'T handle when grandparent doesn't exist (represented by an empty slice). However, in that case it's irrelevant, as it would mean we would be at EOF, and our parser simply auto-closes everything anyway. (Normally we'd have to determine if `<p>Hello` is an error or allowed.)
         typ = OmittedClosingTag;
       } else if VOID_TAGS.contains(name.as_slice()) {
         // Closing tag for void element, drop.
         typ = IgnoredTag;
-      } else if parent.is_empty() || parent != name.as_slice() {
+      } else if parent.is_empty() || !parent.eq_ignore_ascii_case(&name) {
         // Closing tag mismatch, drop.
         typ = IgnoredTag;
       };
@@ -257,7 +247,7 @@ pub fn parse_content(
         closing_tag_omitted = true;
         break;
       }
-      IgnoredTag => drop(parse_tag(code)),
+      IgnoredTag => drop(parse_tag(code, ns)),
       e @ (OpaqueBraceBrace | OpaqueBraceHash | OpaqueBracePercent | OpaqueChevronPercent) => {
         let closing_matcher = match e {
           OpaqueBraceBrace => &CLOSING_BRACE_BRACE,

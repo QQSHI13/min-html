@@ -1,7 +1,7 @@
 [package]
 name = "minify-html-nodejs"
 publish = false
-version = "0.16.4"
+version = "0.18.1"
 description = "Node.js bindings for minify-html"
 authors = ["Wilson Lin <npm@wilsonl.in>"]
 edition = "2021"
@@ -13,6 +13,6 @@ crate-type = ["cdylib"]
 minify-html = { path = "../minify-html" }
 
 [dependencies.neon]
-version = "0.10"
+version = "1.1"
 default-features = false
-features = ["napi-1", "try-catch-api"]
+features = ["napi-1"]

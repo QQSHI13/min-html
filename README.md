@@ -14,7 +14,7 @@ A Rust HTML minifier meticulously optimised for speed and effectiveness, with bi
 
 - Advanced minification strategy beats other minifiers in effectiveness while still being much faster.
 - Handles [invalid HTML](./notes/Parsing.md) and [templating syntax](#templating-syntax).
-- Uses [minify-js](https://github.com/wilsonzlin/minify-js) and [lightningcss](https://github.com/parcel-bundler/lightningcss) for super fast JS and CSS minification.
+- Uses [oxc](https://github.com/oxc-project/oxc) and [lightningcss](https://github.com/parcel-bundler/lightningcss) for super fast JS and CSS minification.
 
 View the [changelog](./CHANGELOG.md) to see the latest updates.
 
@@ -60,7 +60,7 @@ minhtml --keep-closing-tags --minify-css /path/to/**/*.html
 
 ```toml
 [dependencies]
-minify-html = "0.16.4"
+minify-html = "0.18.1"
 ```
 
 ### Use
@@ -106,7 +106,7 @@ All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.htm
 
 - Package: [@minify-html/node](https://www.npmjs.com/package/@minify-html/node)
 - Binding: [Neon](https://github.com/neon-bindings/neon)
-- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Node.js 8.6.0 and higher
+- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Node.js 10.0.0 and higher
 
 ### Get
 
@@ -143,7 +143,7 @@ All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.htm
 
 - Package: [in.wilsonl.minifyhtml](https://search.maven.org/artifact/in.wilsonl.minifyhtml/minify-html)
 - Binding: [JNI](https://github.com/jni-rs/jni-rs)
-- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Java 7 and higher
+- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Java 8 and higher
 
 ### Get
 
@@ -153,7 +153,7 @@ Add as a Maven dependency:
 <dependency>
   <groupId>in.wilsonl.minifyhtml</groupId>
   <artifactId>minify-html</artifactId>
-  <version>0.16.4</version>
+  <version>0.18.1</version>
 </dependency>
 ```
 
@@ -180,7 +180,7 @@ All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.htm
 
 - Package: [minify-html](https://pypi.org/project/minify-html)
 - Binding: [PyO3](https://github.com/PyO3/pyo3)
-- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Python 3.8 to 3.13
+- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Python 3.8 to 3.14
 
 ### Get
 
@@ -203,7 +203,7 @@ All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.htm
 
 - Package: [minify_html](https://rubygems.org/gems/minify_html)
 - Binding: [rb-sys](https://github.com/oxidize-rb/rb-sys) and [magnus](https://github.com/matsadler/magnus)
-- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Ruby 2.7 to 3.4
+- Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Ruby 3.2 to 3.4
 
 ### Get
 

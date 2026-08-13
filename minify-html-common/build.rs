@@ -1,7 +1,7 @@
 use itertools::Itertools;
 use serde::Deserialize;
 use std::cell::RefCell;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::env::var_os;
 use std::fmt::Write;
 use std::ops::Add;
@@ -10,7 +10,7 @@ use std::ops::BitOr;
 use std::path::Path;
 use std::rc::Rc;
 
-#[derive(Deserialize, Hash, PartialEq, Eq, Clone, Copy)]
+#[derive(Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 #[serde(rename_all = "lowercase")]
 enum HtmlDataNamespace {
   Html,
@@ -37,9 +37,9 @@ struct HtmlDataAttrConfig {
 #[derive(Deserialize)]
 #[allow(dead_code)]
 struct HtmlData {
-  tags: HashMap<HtmlDataNamespace, Vec<String>>,
+  tags: BTreeMap<HtmlDataNamespace, Vec<String>>,
   // attr => ns => tag => AttrConfig.
-  attributes: HashMap<String, HashMap<HtmlDataNamespace, HashMap<String, HtmlDataAttrConfig>>>,
+  attributes: BTreeMap<String, BTreeMap<HtmlDataNamespace, BTreeMap<String, HtmlDataAttrConfig>>>,
 }
 
 fn gen_attr_min_struct(
@@ -125,7 +125,10 @@ fn gen_attrs_rs(html_data: &HtmlData) -> String {
       let mut m = AHashMap::<&'static [u8], ByNamespace>::default();
   "#.to_string();
 
-  for (attr_name, namespaces) in html_data.attributes.iter() {
+  let mut attr_names: Vec<_> = html_data.attributes.keys().collect();
+  attr_names.sort();
+  for attr_name in attr_names {
+    let namespaces = &html_data.attributes[attr_name];
     write!(&mut code, r#"m.insert(b"{attr_name}", ByNamespace {{"#).unwrap();
     {
       for ns in [HtmlDataNamespace::Html, HtmlDataNamespace::Svg] {
@@ -153,7 +156,10 @@ fn gen_attrs_rs(html_data: &HtmlData) -> String {
                 "#
               )
               .unwrap();
-              for (tag_name, tag_attr) in tags_map {
+              let mut tag_names: Vec<_> = tags_map.keys().collect();
+              tag_names.sort();
+              for tag_name in tag_names {
+                let tag_attr = &tags_map[tag_name];
                 write!(
                   &mut code,
                   r#"m.insert(b"{}", {});"#,
@@ -371,7 +377,7 @@ fn gen_codepoints_rs() -> String {
 #[derive(Default)]
 struct TrieNode {
   // Keys: 0..=255.
-  children: HashMap<u8, Rc<RefCell<TrieNode>>>,
+  children: BTreeMap<u8, Rc<RefCell<TrieNode>>>,
   value: Option<String>,
 }
 
@@ -404,7 +410,7 @@ impl TrieBuilder {
     struct State {
       variables: Vec<String>,
       next_id: u64,
-      code_cache: HashMap<String, String>,
+      code_cache: BTreeMap<String, String>,
       trie_name: &'static str,
       value_type: &'static str,
     }
@@ -476,7 +482,7 @@ struct Entity {
 }
 
 fn gen_entities_rs() -> String {
-  let entities: HashMap<String, Entity> =
+  let entities: BTreeMap<String, Entity> =
     serde_json::from_slice(include_bytes!("entities.json")).unwrap();
   let mut trie_builder = TrieBuilder::default();
   trie_builder.add(
@@ -493,7 +499,9 @@ fn gen_entities_rs() -> String {
     "EntityType::Hex".to_string(),
   );
   let mut shorter_encoded_entities = vec![];
-  for (encoded, entity) in entities {
+  let mut sorted_entities: Vec<_> = entities.into_iter().collect();
+  sorted_entities.sort_by(|(a, _), (b, _)| a.cmp(b));
+  for (encoded, entity) in sorted_entities {
     let val = format!(r#"&{:?}"#, entity.characters.as_bytes());
     trie_builder.add(
       encoded

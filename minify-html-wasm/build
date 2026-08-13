@@ -14,11 +14,15 @@ if [[ "$target" = "bundler" ]]; then
   jq -s '.[0] * .[1]' package.json ../package.merge.json > package.new.json
   mv package.new.json package.json
   rm .gitignore
+  # https://developers.cloudflare.com/workers/languages/rust/#javascript-plumbing-wasm-bindgen
+  cp ../index.cloudflare.js index.js
 elif [[ "$target" = "deno" ]]; then
   rm .gitignore
   cp ../deno.json .
   # Necessary for Deno.
   sed -i '1s%^%/* @ts-self-types="./index.d.ts" */\n%' index.js
+elif [[ "$target" = "web" ]]; then
+  rm package.json .gitignore
 fi
 popd
 

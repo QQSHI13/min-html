@@ -19,22 +19,23 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: aarch64-unknown-linux-gnu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
           - target: aarch64-apple-darwin
             os: macos-13
           - target: x86_64-apple-darwin
             os: macos-13
           - target: x86_64-pc-windows-msvc
-            os: windows-2019
+            os: windows-2022
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@master
+        uses: actions/setup-node@v7
         with:
-          node-version: 17.x
+          node-version: 20.x
+          registry-url: https://registry.npmjs.org/
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -68,7 +69,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20.x
+          registry-url: https://registry.npmjs.org/
 
       - name: Prepare package
         working-directory: ./minify-html-nodejs

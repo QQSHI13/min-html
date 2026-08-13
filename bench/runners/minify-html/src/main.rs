@@ -25,10 +25,7 @@ fn main() {
     {
       cfg.minify_css = true;
     }
-    #[cfg(feature = "minify-js")]
-    {
-      cfg.minify_js = true;
-    }
+    cfg.minify_js = true;
   };
 
   for t in fs::read_dir(input_dir).unwrap().map(|d| d.unwrap()) {

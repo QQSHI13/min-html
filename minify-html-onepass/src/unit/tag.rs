@@ -12,6 +12,7 @@ use crate::unit::attr::AttrType;
 use crate::unit::attr::ProcessedAttr;
 use crate::unit::content::process_content;
 use crate::unit::script::process_script;
+use crate::unit::script::TopLevelMode;
 use crate::unit::style::process_style;
 use minify_html_common::gen::attrs::AttributeMinification;
 use minify_html_common::gen::attrs::ATTRS;
@@ -101,6 +102,16 @@ pub fn process_tag(
   // Write previously skipped name and use written code as range (otherwise source code will eventually be overwritten).
   let tag_name = proc.write_range(source_tag_name);
 
+  // SVG is foreign content: element and attribute names are case-sensitive.
+  // An `svg` element enters the SVG namespace (case-insensitive match so a
+  // preserved `SVG` still switches), otherwise the tag inherits the parent's
+  // namespace. This tag's own attributes and closing tag follow this ns.
+  let tag_ns = if proc[tag_name].eq_ignore_ascii_case(b"svg") {
+    Namespace::Svg
+  } else {
+    ns
+  };
+
   let mut tag_type = match &proc[tag_name] {
     // Unless non-JS MIME `type` is provided, `script` tags contain JS.
     b"script" => TagType::ScriptJs,
@@ -143,7 +154,7 @@ pub fn process_tag(
       _ => {}
     };
 
-    let ProcessedAttr { name, typ, value } = process_attr(proc, ns, tag_name)?;
+    let ProcessedAttr { name, typ, value } = process_attr(proc, tag_ns, tag_name)?;
     match (tag_type, &proc[name]) {
       // NOTE: We don't support multiple `type` attributes, so can't go from ScriptData => ScriptJs.
       (TagType::ScriptJs, b"type") => {
@@ -206,17 +217,13 @@ pub fn process_tag(
     return Ok(MaybeClosingTag(None));
   };
 
-  let child_ns = if proc[tag_name].eq(b"svg") {
-    Namespace::Svg
-  } else {
-    ns
-  };
+  let child_ns = tag_ns;
 
   let mut closing_tag_omitted = false;
   match tag_type {
     TagType::ScriptData => process_script(proc, cfg, None)?,
-    TagType::ScriptJs => process_script(proc, cfg, Some(minify_js::TopLevelMode::Global))?,
-    TagType::ScriptJsModule => process_script(proc, cfg, Some(minify_js::TopLevelMode::Module))?,
+    TagType::ScriptJs => process_script(proc, cfg, Some(TopLevelMode::Global))?,
+    TagType::ScriptJsModule => process_script(proc, cfg, Some(TopLevelMode::Module))?,
     TagType::Style => process_style(proc, cfg)?,
     _ => {
       closing_tag_omitted =
@@ -234,7 +241,9 @@ pub fn process_tag(
   let closing_tag = proc
     .m(WhileInLookup(TAG_NAME_CHAR), Discard)
     .require("closing tag name")?;
-  proc.make_lowercase(closing_tag);
+  if tag_ns == Namespace::Html {
+    proc.make_lowercase(closing_tag);
+  }
 
   // We need to check closing tag matches as otherwise when we later write closing tag, it might be longer than source closing tag and cause source to be overwritten.
   if proc[closing_tag] != proc[tag_name] {

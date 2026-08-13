@@ -23,8 +23,7 @@ pub struct Cfg {
   pub minify_css: bool,
   /// Minify DOCTYPEs. Minified DOCTYPEs may not be spec compliant, but will still be parsed correctly by almost all browsers.
   pub minify_doctype: bool,
-  #[cfg(feature = "minify-js")]
-  /// Minify JavaScript in `<script>` tags using [minify-js](https://github.com/wilsonzlin/minify-js).
+  /// Minify JavaScript in `<script>` tags using oxc.
   pub minify_js: bool,
   /// When `{{`, `{#`, or `{%` are seen in content, all source code until the subsequent matching closing `}}`, `#}`, or `%}` respectively gets piped through untouched.
   pub preserve_brace_template_syntax: bool,

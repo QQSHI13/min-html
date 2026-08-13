@@ -198,8 +198,12 @@ pub fn create_common_test_data() -> HashMap<&'static [u8], &'static [u8]> {
     b"<svg><path d=\"c d\"/></svg>",
   );
   t.insert(b"<svg><path d='  \n \n  ' /></svg>", b"<svg><path/></svg>");
-  // Attribute names should be case insensitive.
-  t.insert(b"<svg><path D='  \n \n  ' /></svg>", b"<svg><path/></svg>");
+  // SVG foreign content attribute names are case-sensitive (unlike HTML), so
+  // an uppercase `D` is a different attribute from `d` and is left untouched.
+  t.insert(
+    b"<svg><path D='  \n \n  ' /></svg>",
+    b"<svg><path D=\"  \n \n  \"/></svg>",
+  );
 
   // boolean attr value removal
   t.insert(b"<div hidden=\"true\"></div>", b"<div hidden></div>");
@@ -406,11 +410,11 @@ pub fn create_common_test_data() -> HashMap<&'static [u8], &'static [u8]> {
   // self closing svg
   t.insert(
     b"<a><svg viewBox=\"0 0 700 100\" /></a><footer></footer>",
-    b"<a><svg viewbox=\"0 0 700 100\"/></a><footer></footer>",
+    b"<a><svg viewBox=\"0 0 700 100\"/></a><footer></footer>",
   );
   t.insert(
     b"<a><svg viewBox=\"0 0 700 100\"></svg></a><footer></footer>",
-    b"<a><svg viewbox=\"0 0 700 100\"></svg></a><footer></footer>",
+    b"<a><svg viewBox=\"0 0 700 100\"></svg></a><footer></footer>",
   );
 
   t
@@ -434,17 +438,17 @@ pub fn create_common_js_test_data() -> HashMap<&'static [u8], &'static [u8]> {
   // js minification
   t.insert(b"<script></script>", b"<script></script>");
   t.insert(b"<script> </script>", b"<script></script>");
-  t.insert(b"<script>let a = 1;</script>", b"<script>let a=1</script>");
+  t.insert(b"<script>let a = 1;</script>", b"<script>let a=1;</script>");
   t.insert(
     b"<script type=text/javascript>let a = 1;</script>",
-    b"<script>let a=1</script>",
+    b"<script>let a=1;</script>",
   );
   t.insert(
     br#"
         <script>let a = 1;</script>
         <script>let b = 2;</script>
     "#,
-    b"<script>let a=1</script><script>let b=2</script>",
+    b"<script>let a=1;</script><script>let b=2;</script>",
   );
   t.insert(
     b"<scRIPt type=text/plain>   alert(1.00000);   </scripT>",
@@ -457,7 +461,7 @@ pub fn create_common_js_test_data() -> HashMap<&'static [u8], &'static [u8]> {
             let a = 1;
         </script>
     "#,
-    b"<script>let a=1</script>",
+    b"<script>// This is a comment.\nlet a=1;</script>",
   );
 
   // js minification unintentional closing tag

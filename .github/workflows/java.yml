@@ -19,12 +19,12 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: aarch64-unknown-linux-gnu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
             buildfile: 'libminify_html_java.so'
             resfile: 'linux-aarch64.nativelib'
 
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-20.04
+            os: ubuntu-22.04
             buildfile: 'libminify_html_java.so'
             resfile: 'linux-x64.nativelib'
 
@@ -39,11 +39,11 @@ jobs:
             resfile: 'mac-x64.nativelib'
 
           - target: x86_64-pc-windows-msvc
-            os: windows-2019
+            os: windows-2022
             buildfile: 'minify_html_java.dll'
             resfile: 'win-x64.nativelib'
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -64,25 +64,24 @@ jobs:
           mv -v ../target/${{ matrix.target }}/release/${{ matrix.buildfile }} ${{ matrix.resfile }}
 
       - name: Upload built library
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.resfile }}
           path: minify-html-java/${{ matrix.resfile }}
 
   package:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     needs: build
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v5
         with:
+          distribution: 'temurin'
           java-version: '8'
-          java-package: jdk
-          architecture: x64
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: 'minify-html-java/src/main/resources/'
           merge-multiple: true
@@ -98,14 +97,14 @@ jobs:
           <settings>
             <servers>
               <server>
-                <id>ossrh</id>
-                <username>wilsonzlin</username>
-                <password>${{ secrets.SONATYPE_PASSWORD }}</password>
+                <id>central</id>
+                <username>${{ secrets.CENTRAL_PORTAL_USERNAME }}</username>
+                <password>${{ secrets.CENTRAL_PORTAL_TOKEN }}</password>
               </server>
             </servers>
             <profiles>
               <profile>
-                <id>ossrh</id>
+                <id>central</id>
                 <activation>
                   <activeByDefault>true</activeByDefault>
                 </activation>
