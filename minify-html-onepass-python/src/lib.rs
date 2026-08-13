@@ -1,10 +1,10 @@
 use ::minify_html_onepass::in_place as minify_html_native;
 use ::minify_html_onepass::Cfg;
 use ::minify_html_onepass::Error;
+use pyo3::create_exception;
 use pyo3::exceptions::PyException;
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
-use pyo3::create_exception;
 use std::str::from_utf8_unchecked;
 
 create_exception!(minify_html_onepass, MinifyError, PyException);

@@ -3,7 +3,13 @@ use crate::Cfg;
 use aho_corasick::AhoCorasickBuilder;
 use aho_corasick::MatchKind;
 #[cfg(feature = "lightningcss")]
-use lightningcss::stylesheet::{MinifyOptions, ParserOptions, PrinterOptions, StyleAttribute};
+use lightningcss::stylesheet::MinifyOptions;
+#[cfg(feature = "lightningcss")]
+use lightningcss::stylesheet::ParserOptions;
+#[cfg(feature = "lightningcss")]
+use lightningcss::stylesheet::PrinterOptions;
+#[cfg(feature = "lightningcss")]
+use lightningcss::stylesheet::StyleAttribute;
 use minify_html_common::gen::attrs::ATTRS;
 use minify_html_common::gen::codepoints::DIGIT;
 use minify_html_common::pattern::Replacer;
