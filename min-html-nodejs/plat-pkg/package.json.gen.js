@@ -12,7 +12,10 @@ require("fs").writeFileSync(`${__dirname}/package.json`, JSON.stringify({
   description: `@min-html/node native module build for ${platform}-${arch}`,
   main: "index.node",
   files: ["README.md", "index.node"],
-  repository: "QQSHI13/min-html",
+  repository: {
+    type: "git",
+    url: "git+https://github.com/QQSHI13/min-html.git",
+  },
   os: [platform],
   cpu: [arch],
 }, null, 2));
