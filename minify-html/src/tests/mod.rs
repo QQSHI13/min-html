@@ -252,6 +252,24 @@ fn test_style_attr_minification() {
 }
 
 #[test]
+fn test_preserve_self_closing_on_unknown_tags() {
+  let mut cfg = Cfg::new();
+  cfg.preserve_self_closing_on_unknown_tags = true;
+  eval_with_cfg(b"<custom />", b"<custom/>", &cfg);
+  eval_with_cfg(b"<custom class=\"foo\" />", b"<custom class=foo />", &cfg);
+  eval_with_cfg(b"<custom-element />", b"<custom-element/>", &cfg);
+  eval_with_cfg(b"<my-component />", b"<my-component/>", &cfg);
+  eval_with_cfg(b"<div />", b"<div>", &cfg);
+  eval_with_cfg(b"<div id=\"test\" />", b"<div id=test>", &cfg);
+  eval_with_cfg(b"<span />", b"<span>", &cfg);
+  eval_with_cfg(b"<input />", b"<input>", &cfg);
+  eval_with_cfg(b"<br />", b"<br>", &cfg);
+  eval_with_cfg(b"<img />", b"<img>", &cfg);
+  eval_with_cfg(b"<svg><path /></svg>", b"<svg><path/></svg>", &cfg);
+  eval_with_cfg(b"<svg><circle /></svg>", b"<svg><circle/></svg>", &cfg);
+}
+
+#[test]
 fn test_svg_foreign_content_case_preserved() {
   // SVG is foreign content: attribute and element names are case-sensitive.
   // minify-html must not lowercase viewBox / preserveAspectRatio / camelCase
