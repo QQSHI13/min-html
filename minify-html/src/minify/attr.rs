@@ -2,10 +2,8 @@ use crate::entity::encode::encode_entities;
 use crate::Cfg;
 use aho_corasick::AhoCorasickBuilder;
 use aho_corasick::MatchKind;
-use lightningcss::stylesheet::MinifyOptions;
-use lightningcss::stylesheet::ParserOptions;
-use lightningcss::stylesheet::PrinterOptions;
-use lightningcss::stylesheet::StyleAttribute;
+#[cfg(feature = "lightningcss")]
+use lightningcss::stylesheet::{MinifyOptions, ParserOptions, PrinterOptions, StyleAttribute};
 use minify_html_common::gen::attrs::ATTRS;
 use minify_html_common::gen::codepoints::DIGIT;
 use minify_html_common::pattern::Replacer;
@@ -16,7 +14,6 @@ use minify_html_common::whitespace::left_trim;
 use minify_html_common::whitespace::remove_all_whitespace;
 use minify_html_common::whitespace::right_trim;
 use once_cell::sync::Lazy;
-use std::str::from_utf8;
 
 fn build_double_quoted_replacer() -> Replacer {
   let mut patterns = Vec::<Vec<u8>>::new();
@@ -241,16 +238,16 @@ fn build_whatwg_unquoted_replacer() -> Replacer {
   )
 }
 
-static DOUBLE_QUOTED_REPLACER: Lazy<Replacer> = Lazy::new(|| build_double_quoted_replacer());
-static SINGLE_QUOTED_REPLACER: Lazy<Replacer> = Lazy::new(|| build_single_quoted_replacer());
-static UNQUOTED_REPLACER: Lazy<Replacer> = Lazy::new(|| build_unquoted_replacer());
+static DOUBLE_QUOTED_REPLACER: Lazy<Replacer> = Lazy::new(build_double_quoted_replacer);
+static SINGLE_QUOTED_REPLACER: Lazy<Replacer> = Lazy::new(build_single_quoted_replacer);
+static UNQUOTED_REPLACER: Lazy<Replacer> = Lazy::new(build_unquoted_replacer);
 static SEMI_WHATWG_UNQUOTED_REPLACER: Lazy<Replacer> =
-  Lazy::new(|| build_semi_whatwg_unquoted_replacer());
+  Lazy::new(build_semi_whatwg_unquoted_replacer);
 static WHATWG_DOUBLE_QUOTED_REPLACER: Lazy<Replacer> =
-  Lazy::new(|| build_whatwg_double_quoted_replacer());
+  Lazy::new(build_whatwg_double_quoted_replacer);
 static WHATWG_SINGLE_QUOTED_REPLACER: Lazy<Replacer> =
-  Lazy::new(|| build_whatwg_single_quoted_replacer());
-static WHATWG_UNQUOTED_REPLACER: Lazy<Replacer> = Lazy::new(|| build_whatwg_unquoted_replacer());
+  Lazy::new(build_whatwg_single_quoted_replacer);
+static WHATWG_UNQUOTED_REPLACER: Lazy<Replacer> = Lazy::new(build_whatwg_unquoted_replacer);
 
 pub struct AttrMinifiedValue {
   quoted: bool,
@@ -399,15 +396,18 @@ pub fn minify_attr(
     };
   };
 
+  #[cfg(feature = "lightningcss")]
   if name == b"style" && cfg.minify_css {
     let result = match StyleAttribute::parse(
-      from_utf8(&value_raw).expect("`style` attribute value contains non-UTF-8"),
+      std::str::from_utf8(&value_raw).expect("`style` attribute value contains non-UTF-8"),
       ParserOptions::default(),
     ) {
       Ok(mut sty) => {
         sty.minify(MinifyOptions::default());
-        let mut popt = PrinterOptions::default();
-        popt.minify = true;
+        let popt = PrinterOptions::<'_> {
+          minify: true,
+          ..Default::default()
+        };
         match sty.to_css(popt) {
           Ok(out) => Some(out.code),
           // TODO Collect error as warning.

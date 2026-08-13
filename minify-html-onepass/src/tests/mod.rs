@@ -24,20 +24,24 @@ pub fn eval_with_cfg(src: &'static [u8], expected: &'static [u8], cfg: &Cfg) {
     }) => {
       println!("{}", message);
       println!("{}", code_context);
-      assert!(false);
+      panic!("minification failed: {}", message);
     }
   };
 }
 
-pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_js = true;
+pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_js: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
-pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_css = true;
+pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_css: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
@@ -45,7 +49,7 @@ pub fn eval(src: &'static [u8], expected: &'static [u8]) {
   eval_with_cfg(src, expected, &Cfg::new());
 }
 
-fn eval_error(src: &'static [u8], expected: ErrorType) -> () {
+fn eval_error(src: &'static [u8], expected: ErrorType) {
   let mut code = src.to_vec();
   assert_eq!(
     in_place(&mut code, &Cfg {

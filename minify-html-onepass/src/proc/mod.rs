@@ -78,7 +78,7 @@ impl<'d> IndexMut<ProcessorRange> for Processor<'d> {
 impl<'d> Processor<'d> {
   // Constructor.
   #[inline(always)]
-  pub fn new(code: &mut [u8]) -> Processor {
+  pub fn new(code: &mut [u8]) -> Processor<'_> {
     Processor {
       write_next: 0,
       read_next: 0,
@@ -276,9 +276,8 @@ impl<'d> Processor<'d> {
   pub fn skip(&mut self) -> ProcessingResult<u8> {
     self
       ._maybe_read_offset(0)
-      .map(|c| {
+      .inspect(|_| {
         self.read_next += 1;
-        c
       })
       .ok_or(ErrorType::UnexpectedEnd)
   }
@@ -342,11 +341,10 @@ impl<'d> Processor<'d> {
   pub fn accept(&mut self) -> ProcessingResult<u8> {
     self
       ._maybe_read_offset(0)
-      .map(|c| {
+      .inspect(|&c| {
         self.code[self.write_next] = c;
         self.read_next += 1;
         self.write_next += 1;
-        c
       })
       .ok_or(ErrorType::UnexpectedEnd)
   }

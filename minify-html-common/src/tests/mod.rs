@@ -198,8 +198,12 @@ pub fn create_common_test_data() -> HashMap<&'static [u8], &'static [u8]> {
     b"<svg><path d=\"c d\"/></svg>",
   );
   t.insert(b"<svg><path d='  \n \n  ' /></svg>", b"<svg><path/></svg>");
-  // Attribute names should be case insensitive.
-  t.insert(b"<svg><path D='  \n \n  ' /></svg>", b"<svg><path/></svg>");
+  // SVG foreign content attribute names are case-sensitive (unlike HTML), so
+  // an uppercase `D` is a different attribute from `d` and is left untouched.
+  t.insert(
+    b"<svg><path D='  \n \n  ' /></svg>",
+    b"<svg><path D=\"  \n \n  \"/></svg>",
+  );
 
   // boolean attr value removal
   t.insert(b"<div hidden=\"true\"></div>", b"<div hidden></div>");
@@ -406,11 +410,11 @@ pub fn create_common_test_data() -> HashMap<&'static [u8], &'static [u8]> {
   // self closing svg
   t.insert(
     b"<a><svg viewBox=\"0 0 700 100\" /></a><footer></footer>",
-    b"<a><svg viewbox=\"0 0 700 100\"/></a><footer></footer>",
+    b"<a><svg viewBox=\"0 0 700 100\"/></a><footer></footer>",
   );
   t.insert(
     b"<a><svg viewBox=\"0 0 700 100\"></svg></a><footer></footer>",
-    b"<a><svg viewbox=\"0 0 700 100\"></svg></a><footer></footer>",
+    b"<a><svg viewBox=\"0 0 700 100\"></svg></a><footer></footer>",
   );
 
   t

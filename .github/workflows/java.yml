@@ -43,7 +43,7 @@ jobs:
             buildfile: 'minify_html_java.dll'
             resfile: 'win-x64.nativelib'
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -64,7 +64,7 @@ jobs:
           mv -v ../target/${{ matrix.target }}/release/${{ matrix.buildfile }} ${{ matrix.resfile }}
 
       - name: Upload built library
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.resfile }}
           path: minify-html-java/${{ matrix.resfile }}
@@ -73,16 +73,15 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v5
         with:
+          distribution: 'temurin'
           java-version: '8'
-          java-package: jdk
-          architecture: x64
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: 'minify-html-java/src/main/resources/'
           merge-multiple: true
