@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 # https://github.com/oxidize-rb/actions/tree/main/cross-gem
 # https://github.com/gjtorikian/commonmarker/blob/main/.github/workflows/tag_and_release.yml
@@ -16,6 +17,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    environment: rubygems
     strategy:
       matrix:
         platform:
@@ -62,13 +64,10 @@ jobs:
         ruby-versions: "3.3,3.4,4.0"
         working-directory: ./min-html-ruby
 
+    - name: Configure RubyGems credentials
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: rubygems/configure-rubygems-credentials@main
+
     - name: Publish gem
       if: startsWith(github.ref, 'refs/tags/v')
-      run: |
-        mkdir -p "$HOME/.gem"
-        cat << 'EOF' > "$HOME/.gem/credentials"
-        ---
-        :rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}
-        EOF
-        chmod 0600 "$HOME/.gem/credentials"
-        gem push ${{ steps.gem.outputs.gem-path }}
+      run: gem push ${{ steps.gem.outputs.gem-path }}

@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
@@ -36,16 +37,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: 20.x
+          node-version: 22.x
           registry-url: https://registry.npmjs.org/
 
-      - name: Pack and publish package
+      - name: Install npm 11
+        run: npm install -g npm@^11.5.1
+
+      - name: Publish package
         working-directory: ./min-html-wasm/pkg
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        shell: bash
         run: |
           # npm refuses to work with symlinks.
           cp ../../README.md .
           if [[ "${{ steps.version.outputs.VERSION }}" != "0.0.0" ]]; then
-            npm publish --access public
+            npm publish --provenance --access public
           fi

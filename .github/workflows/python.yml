@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 # How cross compilation works with PyO3/maturin-action:
 # - For Linux targets, it uses Docker.
@@ -26,6 +27,7 @@ permissions:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
+    environment: pypi
     strategy:
       matrix:
         os: [ubuntu-latest, macos-13, windows-2022]
@@ -70,25 +72,8 @@ jobs:
           args: --release --sdist --strip -m ./min-html${{ matrix.variant }}-python/Cargo.toml -i ${{ matrix.python }}
           sccache: true
 
-      - name: Install Python build tools (macOS)
-        if: runner.os == 'macOS'
-        run: sudo pip install --upgrade twine
-      - name: Install Python build tools (Linux, Windows)
-        if: runner.os != 'macOS'
-        run: pip install --upgrade twine
-
-      - name: Pack and publish package
-        shell: bash
-        working-directory: ./min-html${{ matrix.variant }}-python
-        run: |
-          cat << 'EOF' > "$HOME/.pypirc"
-          [pypi]
-          username = __token__
-          password = ${{ secrets.PYPI_API_TOKEN }}
-          EOF
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            # For idempotency, ignore any existing built wheels that have already been successfully uploaded.
-            twine upload --skip-existing ../target/wheels/*
-          else
-            ls -al ../target/wheels/*
-          fi
+      - name: Publish wheels to PyPI
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: min-html${{ matrix.variant }}-python/../target/wheels/
