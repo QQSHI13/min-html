@@ -20,7 +20,7 @@ View the [changelog](./CHANGELOG.md) to see the latest updates.
 
 ## Performance
 
-Comparison with [html-minifier](https://github.com/kangax/html-minifier) and [minimize](https://github.com/Swaagie/minimize), run on the top web pages. [See the breakdown here.](./bench)
+Comparison with [html-minifier-next](https://github.com/j9t/html-minifier-next) and [minimize](https://github.com/Swaagie/minimize), run on the top web pages. [See the breakdown here.](./bench)
 
 <img width="400" alt="Chart showing speed of HTML minifiers" src="./bench/graphs/average-speeds.png"><img width="400" alt="Chart showing compression of HTML minifiers" src="./bench/graphs/average-sizes.png">
 
