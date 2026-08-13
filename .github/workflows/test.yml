@@ -9,7 +9,11 @@ env:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
@@ -19,6 +23,7 @@ jobs:
           components: clippy
 
       - name: Install nightly rustfmt
+        shell: bash
         run: rustup toolchain install nightly --component rustfmt
 
       - name: Cache Cargo registry
@@ -32,13 +37,17 @@ jobs:
           restore-keys: ${{ runner.os }}-cargo-
 
       - name: Check formatting
+        shell: bash
         run: cargo +nightly fmt --all -- --check
 
       - name: Run clippy
+        shell: bash
         run: cargo clippy -p minify-html -p minify-html-common -p minify-html-onepass --all-targets --all-features -- -D warnings
 
       - name: Run tests
+        shell: bash
         run: cargo test -p minify-html -p minify-html-common -p minify-html-onepass
 
       - name: Build CLI
+        shell: bash
         run: cargo build -p minhtml
