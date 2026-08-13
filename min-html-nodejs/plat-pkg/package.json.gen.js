@@ -7,9 +7,9 @@ const {platform, arch} = {
 }[process.env.TARGET];
 const {version} = require("../package.json");
 require("fs").writeFileSync(`${__dirname}/package.json`, JSON.stringify({
-  name: `@min-html/node-${platform}-${arch}`,
+  name: `@minhtml/node-${platform}-${arch}`,
   version,
-  description: `@min-html/node native module build for ${platform}-${arch}`,
+  description: `@minhtml/node native module build for ${platform}-${arch}`,
   main: "index.node",
   files: ["README.md", "index.node"],
   repository: {

@@ -1,5 +1,5 @@
 {
-  "name": "@min-html/node",
+  "name": "@minhtml/node",
   "description": "Extremely fast and smart HTML + JS + CSS minifier",
   "bin": {
     "min-html": "./cli.js"
@@ -37,11 +37,11 @@
   },
   "homepage": "https://github.com/QQSHI13/min-html#readme",
   "optionalDependencies": {
-    "@min-html/node-darwin-arm64": "0.18.1",
-    "@min-html/node-darwin-x64": "0.18.1",
-    "@min-html/node-linux-arm64": "0.18.1",
-    "@min-html/node-linux-x64": "0.18.1",
-    "@min-html/node-win32-x64": "0.18.1"
+    "@minhtml/node-darwin-arm64": "0.18.1",
+    "@minhtml/node-darwin-x64": "0.18.1",
+    "@minhtml/node-linux-arm64": "0.18.1",
+    "@minhtml/node-linux-x64": "0.18.1",
+    "@minhtml/node-win32-x64": "0.18.1"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

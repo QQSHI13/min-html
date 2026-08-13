@@ -72,7 +72,7 @@ Check out the [docs](https://docs.rs/min-html) for API and usage examples.
 <details>
 <summary><img width="24" src="https://wilsonl.in/min-html/icon/deno.png"> <strong>Deno</strong></summary>
 
-- Package: [@min-html/deno](https://jsr.io/@min-html/deno/)
+- Package: [@minhtml/deno](https://jsr.io/@minhtml/deno/)
 - Binding: [WASM](https://webassembly.org/)
 - Platforms: All
 
@@ -81,13 +81,13 @@ Check out the [docs](https://docs.rs/min-html) for API and usage examples.
 Add the JSR package:
 
 ```
-deno add jsr:@min-html/deno
+deno add jsr:@minhtml/deno
 ```
 
 ### Use
 
 ```ts
-import init, {minify} from "@min-html/deno";
+import init, {minify} from "@minhtml/deno";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -104,7 +104,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 <details>
 <summary><img width="24" src="https://wilsonl.in/min-html/icon/nodejs.png"> <strong>Node.js</strong></summary>
 
-- Package: [@min-html/node](https://www.npmjs.com/package/@min-html/node)
+- Package: [@minhtml/node](https://www.npmjs.com/package/@minhtml/node)
 - Binding: [Neon](https://github.com/neon-bindings/neon)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Node.js 10.0.0 and higher
 
@@ -113,13 +113,13 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 Using npm:
 
 ```bash
-npm i @min-html/node
+npm i @minhtml/node
 ```
 
 Using Yarn:
 
 ```bash
-yarn add @min-html/node
+yarn add @minhtml/node
 ```
 
 ### Use
@@ -128,8 +128,8 @@ TypeScript definitions are available.
 
 ```ts
 import { Buffer } from "node:buffer";
-import minifyHtml from "@min-html/node";
-// Or `const minifyHtml = require("@min-html/node")` if not using TS/ESM.
+import minifyHtml from "@minhtml/node";
+// Or `const minifyHtml = require("@minhtml/node")` if not using TS/ESM.
 
 const minified = minifyHtml.minify(Buffer.from("<p>  Hello, world!  </p>"), { keep_spaces_between_attributes: true, keep_comments: true });
 ```
@@ -224,7 +224,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 <details>
 <summary><img width="24" src="https://wilsonl.in/min-html/icon/wasm.png"> <strong>WASM</strong></summary>
 
-- Package: [@min-html/wasm](https://npmjs.org/package/@min-html/wasm)
+- Package: [@minhtml/wasm](https://npmjs.org/package/@minhtml/wasm)
 - Binding: [WASM](https://webassembly.org/)
 - Platforms: All
 
@@ -233,7 +233,7 @@ A bundler may be required to use the WebAssembly module, see [this](https://rust
 ### Use
 
 ```ts
-import init, {minify} from "@min-html/wasm";
+import init, {minify} from "@minhtml/wasm";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();

@@ -1,4 +1,4 @@
-const minifyHtml = require("@min-html/node");
+const minifyHtml = require("@minhtml/node");
 const { htmlOnly, run } = require("../common");
 
 const minifyHtmlCfg = {

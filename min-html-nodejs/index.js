@@ -4,5 +4,5 @@ try {
   // Prioritise any local built binary.
   module.exports = require("./index.node");
 } catch {
-  module.exports = require(`@min-html/node-${process.platform}-${process.arch}`);
+  module.exports = require(`@minhtml/node-${process.platform}-${process.arch}`);
 }

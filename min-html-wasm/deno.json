@@ -1,5 +1,5 @@
 {
-  "name": "@min-html/deno",
+  "name": "@minhtml/deno",
   "version": "0.18.1",
   "license": "MIT",
   "exports": "./index.js"

@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "@min-html/node": "file:../../../min-html-nodejs"
-  }
-}
