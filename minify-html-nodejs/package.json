@@ -46,7 +46,7 @@
   "devDependencies": {
     "@types/node": "^14.6.0",
     "cargo-cp-artifact": "^0.1",
-    "shx": "^0.3.4"
+    "shx": "^0.4.0"
   },
   "keywords": [
     "compress",
