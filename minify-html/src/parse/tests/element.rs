@@ -71,7 +71,10 @@ fn test_parse_svg_preserves_case() {
   assert!(attributes.contains_key(b"viewBox".as_ref()));
   assert!(attributes.contains_key(b"preserveAspectRatio".as_ref()));
   assert!(!attributes.contains_key(b"viewbox".as_ref()));
-  let NodeData::Element { name, namespace, .. } = &children[0] else {
+  let NodeData::Element {
+    name, namespace, ..
+  } = &children[0]
+  else {
     panic!("expected child element");
   };
   assert_eq!(name.as_slice(), b"linearGradient");

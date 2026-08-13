@@ -213,7 +213,9 @@ pub fn parse_content(
       } else if name.is_empty() {
         // Malformed code, drop until and including next `>`.
         typ = MalformedLeftChevronSlash;
-      } else if grandparent.eq_ignore_ascii_case(&name) && can_omit_as_last_node(grandparent, parent) {
+      } else if grandparent.eq_ignore_ascii_case(&name)
+        && can_omit_as_last_node(grandparent, parent)
+      {
         // The upcoming closing tag implicitly closes the current element e.g. `<tr><td>(current position)</tr>`.
         // This DOESN'T handle when grandparent doesn't exist (represented by an empty slice). However, in that case it's irrelevant, as it would mean we would be at EOF, and our parser simply auto-closes everything anyway. (Normally we'd have to determine if `<p>Hello` is an error or allowed.)
         typ = OmittedClosingTag;

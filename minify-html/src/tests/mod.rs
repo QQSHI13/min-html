@@ -43,7 +43,8 @@ fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) -> (
 }
 
 #[test]
-fn test_common() {  for (a, b) in create_common_test_data() {
+fn test_common() {
+  for (a, b) in create_common_test_data() {
     eval(a, b);
   }
   for (a, b) in create_common_noncompliant_test_data() {
@@ -246,5 +247,8 @@ fn test_svg_foreign_content_case_preserved() {
 #[test]
 fn test_html_attributes_still_lowercased() {
   // Regular HTML attribute names stay case-insensitive and lowercased.
-  eval(b"<DIV DATA-FOO=\"1\" CLASS=x></DIV>", b"<div class=x data-foo=1></div>");
+  eval(
+    b"<DIV DATA-FOO=\"1\" CLASS=x></DIV>",
+    b"<div class=x data-foo=1></div>",
+  );
 }
