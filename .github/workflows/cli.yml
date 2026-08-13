@@ -34,7 +34,7 @@ jobs:
             os: windows-2022
             ext: '.exe'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Get version
         id: version
@@ -65,7 +65,7 @@ jobs:
           mv -v ../target/${{ matrix.target }}/release/minhtml${{ matrix.ext }} ${{ steps.file.outputs.FILE }}
 
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.file.outputs.FILE }}
           path: minhtml/${{ steps.file.outputs.FILE }}
@@ -74,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           path: '.'
           merge-multiple: true
