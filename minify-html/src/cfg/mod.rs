@@ -18,16 +18,19 @@ pub struct Cfg {
   pub keep_input_type_text_attr: bool,
   /// Keep SSI comments.
   pub keep_ssi_comments: bool,
+  #[cfg(feature = "lightningcss")]
   /// Minify CSS in `<style>` tags and `style` attributes using [https://github.com/parcel-bundler/lightningcss](lightningcss).
   pub minify_css: bool,
   /// Minify DOCTYPEs. Minified DOCTYPEs may not be spec compliant, but will still be parsed correctly by almost all browsers.
   pub minify_doctype: bool,
-  /// Minify JavaScript in `<script>` tags using [minify-js](https://github.com/wilsonzlin/minify-js).
+  /// Minify JavaScript in `<script>` tags using oxc.
   pub minify_js: bool,
   /// When `{{`, `{#`, or `{%` are seen in content, all source code until the subsequent matching closing `}}`, `#}`, or `%}` respectively gets piped through untouched.
   pub preserve_brace_template_syntax: bool,
   /// When `<%` is seen in content, all source code until the subsequent matching closing `%>` gets piped through untouched.
   pub preserve_chevron_percent_template_syntax: bool,
+  /// Preserve self-closing syntax on unknown HTML elements (e.g. `<custom />`).
+  pub preserve_self_closing_on_unknown_tags: bool,
   /// Remove all bangs.
   pub remove_bangs: bool,
   /// Remove all processing instructions.

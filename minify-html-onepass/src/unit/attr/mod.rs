@@ -38,7 +38,11 @@ pub fn process_attr(
   let name = proc
     .m(WhileInLookup(WHATWG_ATTR_NAME_CHAR), Keep)
     .require("attribute name")?;
-  proc.make_lowercase(name);
+  // SVG foreign content attribute names are case-sensitive; only lowercase
+  // HTML attribute names.
+  if ns == Namespace::Html {
+    proc.make_lowercase(name);
+  }
   let attr_cfg = ATTRS.get(ns, &proc[element], &proc[name]);
   let is_boolean = attr_cfg.filter(|attr| attr.boolean).is_some();
   let after_name = WriteCheckpoint::new(proc);

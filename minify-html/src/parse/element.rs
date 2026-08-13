@@ -2,6 +2,7 @@ use crate::ast::AttrVal;
 use crate::ast::ElementClosingTag;
 use crate::ast::NodeData;
 use crate::ast::ScriptOrStyleLang;
+use crate::cfg::Cfg;
 use crate::entity::decode::decode_entities;
 use crate::parse::content::parse_content;
 use crate::parse::content::ParsedContent;
@@ -22,16 +23,21 @@ use minify_html_common::gen::codepoints::WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_
 use minify_html_common::spec::script::JAVASCRIPT_MIME_TYPES;
 use minify_html_common::spec::tag::ns::Namespace;
 use minify_html_common::spec::tag::void::VOID_TAGS;
+use minify_html_common::spec::tag::whitespace::HTML_TAG_WHITESPACE_MINIFICATION;
 use std::fmt::Debug;
 use std::fmt::Formatter;
 use std::io::Write;
 use std::str::from_utf8;
 
-fn parse_tag_name(code: &mut Code) -> Vec<u8> {
+fn parse_tag_name_raw(code: &mut Code) -> Vec<u8> {
   debug_assert!(code.as_slice().starts_with(b"<"));
   code.shift(1);
   code.shift_if_next(b'/');
-  let mut name = code.copy_and_shift_while_in_lookup(TAG_NAME_CHAR);
+  code.copy_and_shift_while_in_lookup(TAG_NAME_CHAR)
+}
+
+fn parse_tag_name(code: &mut Code) -> Vec<u8> {
+  let mut name = parse_tag_name_raw(code);
   name.make_ascii_lowercase();
   name
 }
@@ -68,8 +74,22 @@ impl Debug for ParsedTag {
 
 // While not valid, attributes in closing tags still need to be parsed (and then discarded) as attributes e.g. `</div x=">">`, which is why this function is used for both opening and closing tags.
 // TODO Use generics to create version that doesn't create an AHashMap.
-pub fn parse_tag(code: &mut Code) -> ParsedTag {
-  let elem_name = parse_tag_name(code);
+pub fn parse_tag(code: &mut Code, ns: Namespace) -> ParsedTag {
+  let raw_elem_name = parse_tag_name_raw(code);
+  // SVG is foreign content: per the HTML spec its element and attribute names
+  // are case-sensitive (e.g. `viewBox`, `linearGradient`). Enter the SVG
+  // namespace for this tag (case-insensitive match so `<SVG>` still switches)
+  // and preserve the author's casing inside it; HTML keeps lowercasing.
+  let ns = if raw_elem_name.eq_ignore_ascii_case(b"svg") {
+    Namespace::Svg
+  } else {
+    ns
+  };
+  let elem_name = if ns == Namespace::Svg {
+    raw_elem_name
+  } else {
+    raw_elem_name.to_ascii_lowercase()
+  };
   let mut attributes = AHashMap::default();
   let self_closing;
   loop {
@@ -124,9 +144,10 @@ pub fn parse_tag(code: &mut Code) -> ParsedTag {
         code.slice_and_shift_while_not_in_lookup(WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_CHEVRON),
       );
       debug_assert!(!attr_name.is_empty());
-      attr_name.make_ascii_lowercase();
+      if ns == Namespace::Html {
+        attr_name.make_ascii_lowercase();
+      }
     }
-
     // See comment for WHITESPACE_OR_SLASH in codepoints.ts for details of complex attr parsing.
     code.shift_while_in_lookup(WHITESPACE);
     let has_value = code.shift_if_next(b'=');
@@ -169,22 +190,32 @@ pub fn parse_tag(code: &mut Code) -> ParsedTag {
 }
 
 // `<` must be next. `parent` should be an empty slice if it doesn't exist.
-pub fn parse_element(code: &mut Code, ns: Namespace, parent: &[u8]) -> NodeData {
+pub fn parse_element(cfg: &Cfg, code: &mut Code, ns: Namespace, parent: &[u8]) -> NodeData {
   let ParsedTag {
     name: elem_name,
     attributes,
     self_closing,
-  } = parse_tag(code);
+  } = parse_tag(code, ns);
 
   // Embedded svg tags are immediately in the svg namespace and must be parsed as such.
-  let ns = if elem_name == b"svg" {
+  // Case-insensitive so `<SVG>` switches namespaces even though parse_tag may
+  // have preserved the author's casing.
+  let ns = if elem_name.eq_ignore_ascii_case(b"svg") {
     Namespace::Svg
   } else {
     ns
   };
 
   // Only foreign elements can be self closed.
-  if self_closing && ns != Namespace::Html {
+  // However, if preserve_self_closing_on_unknown_tags is enabled,
+  // preserve self-closing syntax on unknown HTML elements as well.
+  let should_preserve_self_closing = cfg.preserve_self_closing_on_unknown_tags
+    && !VOID_TAGS.contains(elem_name.as_slice())
+    && HTML_TAG_WHITESPACE_MINIFICATION
+      .get(elem_name.as_slice())
+      .is_none();
+
+  if self_closing && (ns != Namespace::Html || should_preserve_self_closing) {
     return NodeData::Element {
       attributes,
       children: Vec::new(),
@@ -221,11 +252,11 @@ pub fn parse_element(code: &mut Code, ns: Namespace, parent: &[u8]) -> NodeData 
     (_, b"style") => parse_style_content(code),
     (Namespace::Html, b"textarea") => parse_textarea_content(code),
     (Namespace::Html, b"title") => parse_title_content(code),
-    _ => parse_content(code, ns, parent, &elem_name),
+    _ => parse_content(cfg, code, ns, parent, &elem_name),
   };
 
   if !closing_tag_omitted {
-    let closing_tag = parse_tag(code);
+    let closing_tag = parse_tag(code, ns);
     debug_assert_eq!(closing_tag.name, elem_name);
   };
 

@@ -36,15 +36,16 @@ pub fn minify_js(cfg: &Cfg, mode: TopLevelMode, out: &mut Vec<u8>, code: &[u8]) 
       let parser_ret = Parser::new(&allocator, source_text, source_type).parse();
 
       // Only proceed if parsing succeeded without errors
-      if parser_ret.errors.is_empty() {
+      if parser_ret.diagnostics.is_empty() {
         let mut program = parser_ret.program;
-        
+
         // Apply minification
         // Use CompressOptions::safest() instead of default() to avoid overly aggressive dead code elimination
         let _minifier_ret = Minifier::new(MinifierOptions {
           mangle: Some(MangleOptions::default()),
           compress: Some(CompressOptions::safest()),
-        }).minify(&allocator, &mut program);
+        })
+        .minify(&allocator, &mut program);
 
         // Generate minified code
         // Disable treeshake annotations (e.g., /*#__PURE__*/, /*@__PURE__*/)

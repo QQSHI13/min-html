@@ -21,7 +21,10 @@ fn main() {
   let mut cfg = Cfg::new();
   cfg.enable_possibly_noncompliant();
   if !html_only {
-    cfg.minify_css = true;
+    #[cfg(feature = "lightningcss")]
+    {
+      cfg.minify_css = true;
+    }
     cfg.minify_js = true;
   };
 

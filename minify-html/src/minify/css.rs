@@ -8,8 +8,10 @@ use std::str::from_utf8;
 
 pub fn minify_css(cfg: &Cfg, out: &mut Vec<u8>, code: &[u8]) {
   if cfg.minify_css {
-    let mut popt = PrinterOptions::default();
-    popt.minify = true;
+    let popt = PrinterOptions::<'_> {
+      minify: true,
+      ..Default::default()
+    };
     let result = match StyleSheet::parse(
       from_utf8(code).expect("<style> content contains non-UTF-8"),
       ParserOptions::default(),

@@ -44,10 +44,8 @@ jobs:
           # musl builds only make sense on Linux
           - os: macos-13
             libc: musl
-          - os: windows-2019
-            libc: musl
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v7
 
       - name: Patches
         shell: bash
@@ -60,7 +58,7 @@ jobs:
           rm ./minify-html${{ matrix.variant }}-python/Cargo.toml.bak
 
       - name: Build wheels
-        uses: PyO3/maturin-action@v1
+        uses: PyO3/maturin-action@v1.51.0
         with:
           target: ${{ matrix.target }}
           # Conditionally set manylinux based on libc type
