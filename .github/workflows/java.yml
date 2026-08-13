@@ -43,7 +43,7 @@ jobs:
             buildfile: 'minify_html_java.dll'
             resfile: 'win-x64.nativelib'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up JDK
         uses: actions/setup-java@v4

@@ -45,7 +45,7 @@ jobs:
           - os: macos-13
             libc: musl
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Patches
         shell: bash
