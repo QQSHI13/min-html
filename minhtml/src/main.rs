@@ -75,6 +75,10 @@ struct Cli {
   #[structopt(long)]
   minify_js: bool,
 
+  /// Preserve self-closing syntax on unknown HTML elements (e.g. `<custom />`).
+  #[structopt(long)]
+  preserve_self_closing_on_unknown_tags: bool,
+
   /// When `{{`, `{#`, or `{%` are seen in content, all source code until the subsequent matching closing `}}`, `#}`, or `%}` respectively gets piped through untouched.
   #[structopt(long)]
   preserve_brace_template_syntax: bool,
@@ -124,6 +128,7 @@ fn main() {
     minify_css: args.minify_css,
     minify_doctype: args.minify_doctype,
     minify_js: args.minify_js,
+    preserve_self_closing_on_unknown_tags: args.preserve_self_closing_on_unknown_tags,
     preserve_brace_template_syntax: args.preserve_brace_template_syntax,
     preserve_chevron_percent_template_syntax: args.preserve_chevron_percent_template_syntax,
     remove_bangs: args.remove_bangs,

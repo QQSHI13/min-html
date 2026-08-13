@@ -30,6 +30,7 @@ public class Configuration {
   boolean minifyJs;
   boolean preserveBraceTemplateSyntax;
   boolean preserveChevronPercentTemplateSyntax;
+  boolean preserveSelfClosingOnUnknownTags;
   boolean removeBangs;
   boolean removeProcessingInstructions;
   /* END FIELD NAMES */

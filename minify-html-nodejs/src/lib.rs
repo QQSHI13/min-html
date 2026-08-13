@@ -30,6 +30,7 @@ fn minify(mut cx: FunctionContext) -> JsResult<JsBuffer> {
     minify_css: get_bool!(cx, opt, "minify_css"),
     minify_doctype: get_bool!(cx, opt, "minify_doctype"),
     minify_js: get_bool!(cx, opt, "minify_js"),
+    preserve_self_closing_on_unknown_tags: get_bool!(cx, opt, "preserve_self_closing_on_unknown_tags"),
     preserve_brace_template_syntax: get_bool!(cx, opt, "preserve_brace_template_syntax"),
     preserve_chevron_percent_template_syntax: get_bool!(cx, opt, "preserve_chevron_percent_template_syntax"),
     remove_bangs: get_bool!(cx, opt, "remove_bangs"),

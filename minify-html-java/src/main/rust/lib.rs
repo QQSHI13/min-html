@@ -25,6 +25,7 @@ fn build_cfg(env: &mut JNIEnv, obj: &JObject) -> Cfg {
     minify_js: env.call_method(*obj, "isMinifyJs", "()Z", &[]).unwrap().z().unwrap(),
     preserve_brace_template_syntax: env.call_method(*obj, "isPreserveBraceTemplateSyntax", "()Z", &[]).unwrap().z().unwrap(),
     preserve_chevron_percent_template_syntax: env.call_method(*obj, "isPreserveChevronPercentTemplateSyntax", "()Z", &[]).unwrap().z().unwrap(),
+    preserve_self_closing_on_unknown_tags: env.call_method(*obj, "isPreserveSelfClosingOnUnknownTags", "()Z", &[]).unwrap().z().unwrap(),
     remove_bangs: env.call_method(*obj, "isRemoveBangs", "()Z", &[]).unwrap().z().unwrap(),
     remove_processing_instructions: env.call_method(*obj, "isRemoveProcessingInstructions", "()Z", &[]).unwrap().z().unwrap(),
     // END CONFIGURATION FIELDS

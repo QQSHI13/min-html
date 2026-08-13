@@ -33,6 +33,7 @@ pub fn minify(code: &[u8], cfg: &JsValue) -> Vec<u8> {
     minify_css: get_prop!(cfg, "minify_css"),
     minify_doctype: get_prop!(cfg, "minify_doctype"),
     minify_js: get_prop!(cfg, "minify_js"),
+    preserve_self_closing_on_unknown_tags: get_prop!(cfg, "preserve_self_closing_on_unknown_tags"),
     preserve_brace_template_syntax: get_prop!(cfg, "preserve_brace_template_syntax"),
     preserve_chevron_percent_template_syntax: get_prop!(cfg, "preserve_chevron_percent_template_syntax"),
     remove_bangs: get_prop!(cfg, "remove_bangs"),
