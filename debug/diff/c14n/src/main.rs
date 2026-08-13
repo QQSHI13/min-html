@@ -1,4 +1,4 @@
-use minify_html::canonicalise;
+use min_html::canonicalise;
 use std::io::stdin;
 use std::io::stdout;
 use std::io::Read;

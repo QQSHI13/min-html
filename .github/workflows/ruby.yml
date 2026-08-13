@@ -28,19 +28,19 @@ jobs:
       run: |
         # Name must match or else `RbSys::PackageNotFoundError: Could not find Cargo package metadata for nil. Please check that nil matches the crate name in your Cargo.toml.`
         # We edit it here instead of just updating our repo code as Cargo workspace names must be different.
-        sed -i 's%^name = ".*$%name = "minify_html"%' ./minify-html-ruby/ext/minify_html/Cargo.toml
+        sed -i 's%^name = ".*$%name = "min_html"%' ./min-html-ruby/ext/min_html/Cargo.toml
 
         # rb-sys-dock doesn't support local path deps: https://github.com/oxidize-rb/rb-sys/issues/296
-        ver=$(jq -r .version minify-html-nodejs/package.json)
-        sed -i 's%^minify-html = .*$%minify-html = "'$ver'"%' ./minify-html-ruby/ext/minify_html/Cargo.toml
+        ver=$(jq -r .version min-html-nodejs/package.json)
+        sed -i 's%^min-html = .*$%min-html = "'$ver'"%' ./min-html-ruby/ext/min_html/Cargo.toml
 
-        # This is required or else `error: could not find `Cargo.toml` in `/home/runner/work/.../minify-html-ruby` or any parent directory`.
-        cat <<'EOD'>./minify-html-ruby/Cargo.toml
+        # This is required or else `error: could not find `Cargo.toml` in `/home/runner/work/.../min-html-ruby` or any parent directory`.
+        cat <<'EOD'>./min-html-ruby/Cargo.toml
         [workspace]
-        members = ["ext/minify_html"]
+        members = ["ext/min_html"]
         EOD
 
-        cp ./README.md ./minify-html-ruby/.
+        cp ./README.md ./min-html-ruby/.
 
     - name: Set up Ruby and Rust
       uses: oxidize-rb/actions/setup-ruby-and-rust@v1.4.4
@@ -57,7 +57,7 @@ jobs:
       with:
         platform: ${{ matrix.platform }}
         ruby-versions: "3.3,3.4,4.0"
-        working-directory: ./minify-html-ruby
+        working-directory: ./min-html-ruby
 
     - name: Publish gem
       if: startsWith(github.ref, 'refs/tags/v')

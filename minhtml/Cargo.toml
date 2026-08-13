@@ -5,13 +5,13 @@ version = "0.18.1"
 authors = ["Wilson Lin <code@wilsonl.in>"]
 edition = "2018"
 license = "MIT"
-homepage = "https://github.com/wilsonzlin/minify-html"
+homepage = "https://github.com/QQSHI13/min-html"
 readme = "README.md"
 keywords = ["html", "compress", "minifier", "js", "css"]
 categories = ["compression", "command-line-utilities", "development-tools::build-utils", "web-programming"]
-repository = "https://github.com/wilsonzlin/minify-html.git"
+repository = "https://github.com/QQSHI13/min-html.git"
 
 [dependencies]
-minify-html = { version = "0.18.1", path = "../minify-html" }
+min-html = { version = "0.18.1", path = "../min-html" }
 rayon = "1.11"
 structopt = "0.3"

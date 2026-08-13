@@ -1,0 +1,45 @@
+use ::min_html_onepass::in_place as min_html_native;
+use ::min_html_onepass::Cfg;
+use ::min_html_onepass::Error;
+use pyo3::create_exception;
+use pyo3::exceptions::PyException;
+use pyo3::prelude::*;
+use pyo3::wrap_pyfunction;
+use std::str::from_utf8_unchecked;
+
+create_exception!(min_html_onepass, MinifyError, PyException);
+
+#[pyfunction]
+#[pyo3(
+  signature = (
+    code,
+    *,
+    minify_js = false,
+    minify_css = false
+  )
+)]
+fn minify(code: String, minify_js: bool, minify_css: bool) -> PyResult<String> {
+  let mut code = code.into_bytes();
+  match min_html_native(&mut code, &Cfg {
+    minify_js,
+    minify_css,
+  }) {
+    Ok(out_len) => Ok(unsafe { from_utf8_unchecked(&code[0..out_len]).to_string() }),
+    Err(Error {
+      error_type,
+      position,
+    }) => Err(MinifyError::new_err(format!(
+      "{} [Character {}]",
+      error_type.message(),
+      position
+    ))),
+  }
+}
+
+#[pymodule]
+fn min_html_onepass(m: &Bound<'_, PyModule>) -> PyResult<()> {
+  m.add("MinifyError", m.py().get_type::<MinifyError>())?;
+  m.add_function(wrap_pyfunction!(minify, m)?)?;
+
+  Ok(())
+}

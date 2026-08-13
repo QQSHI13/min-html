@@ -52,10 +52,10 @@ jobs:
         run: |
           # Maturin uses Cargo.toml name for Python name: https://www.maturin.rs/#usage.
           # We edit it here instead of just updating our repo code as Cargo workspace names must be different.
-          newName=minify-html${{ matrix.variant }}
+          newName=min-html${{ matrix.variant }}
           newName=${newName//-/_}
-          sed -i.bak 's%^name = ".*$%name = "'$newName'"%' ./minify-html${{ matrix.variant }}-python/Cargo.toml
-          rm ./minify-html${{ matrix.variant }}-python/Cargo.toml.bak
+          sed -i.bak 's%^name = ".*$%name = "'$newName'"%' ./min-html${{ matrix.variant }}-python/Cargo.toml
+          rm ./min-html${{ matrix.variant }}-python/Cargo.toml.bak
 
       - name: Build wheels
         uses: PyO3/maturin-action@v1.51.0
@@ -64,7 +64,7 @@ jobs:
           # Conditionally set manylinux based on libc type
           manylinux: ${{ matrix.libc == 'musl' && 'musllinux_1_1' || 'auto' }}
           # https://github.com/PyO3/maturin-action/issues/49#issuecomment-1166242843
-          args: --release --sdist --strip -m ./minify-html${{ matrix.variant }}-python/Cargo.toml -i ${{ matrix.python }}
+          args: --release --sdist --strip -m ./min-html${{ matrix.variant }}-python/Cargo.toml -i ${{ matrix.python }}
           sccache: true
 
       - name: Install Python build tools (macOS)
@@ -76,7 +76,7 @@ jobs:
 
       - name: Pack and publish package
         shell: bash
-        working-directory: ./minify-html${{ matrix.variant }}-python
+        working-directory: ./min-html${{ matrix.variant }}-python
         run: |
           cat << 'EOF' > "$HOME/.pypirc"
           [pypi]

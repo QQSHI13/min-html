@@ -50,7 +50,7 @@ jobs:
       - if: matrix.language == 'java'
         name: Build Java bindings
         run: |
-          cd minify-html-java
+          cd min-html-java
           mvn compile -DskipTests
 
       - if: matrix.build-mode == 'none'

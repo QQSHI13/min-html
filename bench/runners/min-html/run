@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -Eeuxo pipefail
+
+../../../target/release/min-html-bench

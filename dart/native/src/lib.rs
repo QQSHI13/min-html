@@ -1,13 +1,13 @@
 use std::{cell::RefCell, ptr, slice};
 
-use minify_html::Cfg;
+use min_html::Cfg;
 
 thread_local! {
     static LAST_RESULT: RefCell<Option<Vec<u8>>> = RefCell::new(None);
 }
 
 #[no_mangle]
-pub extern "C" fn minify_html(
+pub extern "C" fn min_html(
     input: *const u8,
     length: usize,
     do_not_minify_doctype: bool,
@@ -42,7 +42,7 @@ pub extern "C" fn minify_html(
         remove_processing_instructions,
     };
 
-    let result = minify_html::minify(src, &cfg);
+    let result = min_html::minify(src, &cfg);
     let len = result.len();
 
     LAST_RESULT.with(|v| *v.borrow_mut() = Some(result));

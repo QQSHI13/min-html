@@ -1,0 +1,13 @@
+[package]
+publish = false
+name = "min-html-ruby"
+version = "0.18.1"
+authors = ["Wilson Lin <code@wilsonl.in>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+min-html = { path = "../../../min-html" }
+magnus = "0.8"

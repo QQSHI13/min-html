@@ -1,4 +1,4 @@
-# minify-html changelog
+# min-html changelog
 
 ## Pending
 
@@ -68,7 +68,7 @@
 - [Python] Add Python 3.13 support.
 - [Ruby] Add Ruby 3.3/3.4 support.
 - [Deno] Publish to JSR.
-- [Rust] Deny unsafe code in minify-html crate.
+- [Rust] Deny unsafe code in min-html crate.
 
 ## 0.15.0
 
@@ -105,7 +105,7 @@
 
 - Change CLI name to `minhtml` as it's a more concise command name and allows for `cargo install minhtml`.
 - Add `keep_ssi_comments` to preserve SSI comments.
-- [Ruby] BREAKING: The class method is now a global function, so call `minify_html` instead of `MinifyHtml.minify`. All else remains the same. This is due to migrating from Rutie (see [0.11.3](#0113)).
+- [Ruby] BREAKING: The class method is now a global function, so call `min_html` instead of `MinifyHtml.minify`. All else remains the same. This is due to migrating from Rutie (see [0.11.3](#0113)).
   - This change was inadvertently released in patch version bumps from `0.11.3` to `0.11.5`; these gems have been yanked.
 
 ## 0.11.5
@@ -120,7 +120,7 @@
 ## 0.11.3
 
 - Fix detection of module type scripts.
-- Derive `Clone` for `Cfg` in minify-html.
+- Derive `Clone` for `Cfg` in min-html.
 - Fix parsing of malformed closing tags.
 - Cross compile Python library for macOS ARM64.
 - Migrate to rb-sys and magnus for Ruby library, which adds support for up to Ruby 3.2 and more platforms.
@@ -133,7 +133,7 @@
 - Restructure project to use top-level Cargo workspace instead of separate isolated crates.
 - Extract out common Rust code to separate published shared crate instead of symlinking.
 - Port `gen` code to `build.rs` in common Rust library to avoid requiring Node.js in order to build, and to ensure code stays in sync.
-- Rename library folders to `minify-html-*` to better distinguish them from other assorted project code.
+- Rename library folders to `min-html-*` to better distinguish them from other assorted project code.
 
 ## 0.11.1
 

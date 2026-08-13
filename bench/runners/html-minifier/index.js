@@ -5,9 +5,9 @@ const htmlMinifierCfg = {
   collapseBooleanAttributes: true,
   collapseInlineTagWhitespace: true,
   collapseWhitespace: true,
-  // minify-html can do context-aware whitespace removal, which is safe when configured correctly to match how whitespace is used in the document.
+  // min-html can do context-aware whitespace removal, which is safe when configured correctly to match how whitespace is used in the document.
   // html-minifier cannot, so whitespace must be collapsed conservatively.
-  // Alternatively, minify-html can also be made to remove whitespace regardless of context.
+  // Alternatively, min-html can also be made to remove whitespace regardless of context.
   conservativeCollapse: true,
   customEventAttributes: [],
   decodeEntities: true,

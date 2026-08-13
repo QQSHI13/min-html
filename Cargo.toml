@@ -1,19 +1,19 @@
 [workspace]
 members = [
-  "bench/runners/minify-html-onepass",
-  "bench/runners/minify-html",
+  "bench/runners/min-html-onepass",
+  "bench/runners/min-html",
   "debug/diff/c14n",
   "debug/diff/charlines",
   "minhtml",
-  "minify-html-common",
-  "minify-html-java",
-  "minify-html-nodejs",
-  "minify-html-onepass-python",
-  "minify-html-onepass",
-  "minify-html-python",
-  "minify-html-ruby/ext/minify_html",
-  "minify-html-wasm",
-  "minify-html",
+  "min-html-common",
+  "min-html-java",
+  "min-html-nodejs",
+  "min-html-onepass-python",
+  "min-html-onepass",
+  "min-html-python",
+  "min-html-ruby/ext/min_html",
+  "min-html-wasm",
+  "min-html",
 ]
 
 [profile.release]

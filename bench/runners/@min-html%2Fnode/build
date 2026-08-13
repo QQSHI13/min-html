@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -Eeuxo pipefail
+
+pushd ../../../min-html-nodejs
+# Ensure devdeps required for building are installed.
+npm i
+npm run build
+popd
+
+npm i

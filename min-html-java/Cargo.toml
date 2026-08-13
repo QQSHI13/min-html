@@ -1,0 +1,14 @@
+[package]
+publish = false
+name = "min-html-java"
+version = "0.18.1"
+authors = ["Wilson Lin <code@wilsonl.in>"]
+edition = "2018"
+
+[dependencies]
+min-html = { path = "../min-html" }
+jni = "0.22"
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/main/rust/lib.rs"

@@ -1,0 +1,18 @@
+[package]
+name = "min-html-nodejs"
+publish = false
+version = "0.18.1"
+description = "Node.js bindings for min-html"
+authors = ["Wilson Lin <code@wilsonl.in>"]
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+min-html = { path = "../min-html" }
+
+[dependencies.neon]
+version = "1.1"
+default-features = false
+features = ["napi-1"]

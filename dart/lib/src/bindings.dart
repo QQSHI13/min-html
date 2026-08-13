@@ -3,9 +3,9 @@
 import 'dart:ffi';
 
 import 'package:ffi/ffi.dart';
-import 'package:minify_html/src/locator.dart';
+import 'package:min_html/src/locator.dart';
 
-typedef minify_html_native = Int32 Function(
+typedef min_html_native = Int32 Function(
   Pointer<Utf8> input,
   Uint32 length,
   Bool do_not_minify_doctype,
@@ -56,7 +56,7 @@ class MinifyHtmlBindings {
     _library = loadDynamicLibrary();
 
     minifyHtml = _library
-        .lookup<NativeFunction<minify_html_native>>("minify_html")
+        .lookup<NativeFunction<min_html_native>>("min_html")
         .asFunction();
     getLastResult = _library
         .lookup<NativeFunction<get_last_result_native>>("get_last_result")

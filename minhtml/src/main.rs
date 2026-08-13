@@ -1,5 +1,5 @@
-use minify_html::minify;
-use minify_html::Cfg;
+use min_html::minify;
+use min_html::Cfg;
 use rayon::iter::IntoParallelRefIterator;
 use rayon::iter::ParallelIterator;
 use std::fs::File;
@@ -192,7 +192,7 @@ fn main() {
         out_file.write_all(&out_code),
         "Could not save minified code"
       );
-      // Just print the name, since this is the default output and any prefix becomes redundant. It'd also allow piping into another command (quite nice for something like `minify-html *.html | xargs gzip`), copying as list of files, etc.
+      // Just print the name, since this is the default output and any prefix becomes redundant. It'd also allow piping into another command (quite nice for something like `min-html *.html | xargs gzip`), copying as list of files, etc.
       println!("{}", input_name);
     });
   }

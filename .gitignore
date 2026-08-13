@@ -29,4 +29,4 @@ index.node
 *.egg-info/
 
 # WASM
-/minify-html-wasm/pkg/
+/min-html-wasm/pkg/

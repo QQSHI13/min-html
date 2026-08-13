@@ -10,13 +10,13 @@ const AVERAGE_SPEEDS_GRAPH = path.join(GRAPHS_DIR, "average-speeds.png");
 const AVERAGE_SIZES_GRAPH = path.join(GRAPHS_DIR, "average-sizes.png");
 
 const speedColours = {
-  "minify-html": "#2e61bd",
-  "minify-html-onepass": "#222",
+  "min-html": "#2e61bd",
+  "min-html-onepass": "#222",
 };
 const defaultSpeedColour = "rgb(188, 188, 188)";
 
 const sizeColours = {
-  "minify-html": "#2e61bd",
+  "min-html": "#2e61bd",
 };
 const defaultSizeColour = "rgb(188, 188, 188)";
 
@@ -148,10 +148,10 @@ const renderChart = (cfg, width, height) =>
   const speedMinifiers = [
     "html-minifier",
     "minimize",
-    "minify-html",
-    "minify-html-onepass",
+    "min-html",
+    "min-html-onepass",
   ];
-  const sizeMinifiers = ["minimize", "html-minifier", "minify-html"];
+  const sizeMinifiers = ["minimize", "html-minifier", "min-html"];
   const inputs = Object.keys(res.inputSizes).sort();
 
   await fs.writeFile(
@@ -214,12 +214,12 @@ const renderChart = (cfg, width, height) =>
             data: inputs.map(
               (input) =>
                 res.perInputOps[minifier][input] /
-                res.perInputOps["minify-html"][input]
+                res.perInputOps["min-html"][input]
             ),
           })),
         },
         ...breakdownChartOptions(
-          "Operations per second, relative to minify-html"
+          "Operations per second, relative to min-html"
         ),
       },
       900,
@@ -239,11 +239,11 @@ const renderChart = (cfg, width, height) =>
             data: inputs.map(
               (input) =>
                 res.perInputReduction[minifier][input] /
-                res.perInputReduction["minify-html"][input]
+                res.perInputReduction["min-html"][input]
             ),
           })),
         },
-        ...breakdownChartOptions("Size reduction, relative to minify-html"),
+        ...breakdownChartOptions("Size reduction, relative to min-html"),
       },
       900,
       1600

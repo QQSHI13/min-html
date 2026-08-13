@@ -1,0 +1,28 @@
+{
+  "name": "@min-html/wasm",
+  "description": "Extremely fast and smart HTML + JS + CSS minifier",
+  "type": "module",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QQSHI13/min-html.git"
+  },
+  "author": {
+    "email": "code@wilsonl.in",
+    "name": "Wilson Lin",
+    "url": "https://wilsonl.in/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/QQSHI13/min-html/issues"
+  },
+  "homepage": "https://github.com/QQSHI13/min-html#readme",
+  "keywords": [
+    "compress",
+    "compressor",
+    "fast",
+    "html",
+    "minifier",
+    "minify"
+  ]
+}

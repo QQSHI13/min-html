@@ -1,8 +1,8 @@
 # Parsing
 
-minify-html does not have any error states and will always output a value. This means that all possible ambiguous or malformed states need to be handled. This document describes these.
+min-html does not have any error states and will always output a value. This means that all possible ambiguous or malformed states need to be handled. This document describes these.
 
-minify-html tries to match what the specs dictate and modern browsers do. However, there may be occasional differences for malformed syntax, as the browser and spec rules are very complex when handling invalid HTML.
+min-html tries to match what the specs dictate and modern browsers do. However, there may be occasional differences for malformed syntax, as the browser and spec rules are very complex when handling invalid HTML.
 
 ## Limitations
 

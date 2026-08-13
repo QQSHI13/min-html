@@ -42,11 +42,11 @@ jobs:
 
       - name: Run clippy
         shell: bash
-        run: cargo clippy -p minify-html -p minify-html-common -p minify-html-onepass --all-targets --all-features -- -D warnings
+        run: cargo clippy -p min-html -p min-html-common -p min-html-onepass --all-targets --all-features -- -D warnings
 
       - name: Run tests
         shell: bash
-        run: cargo test -p minify-html -p minify-html-common -p minify-html-onepass
+        run: cargo test -p min-html -p min-html-common -p min-html-onepass
 
       - name: Build CLI
         shell: bash

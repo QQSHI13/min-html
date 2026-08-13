@@ -13,13 +13,13 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: "npm"
-    directory: "/minify-html-nodejs"
+    directory: "/min-html-nodejs"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "npm"
-    directory: "/minify-html-wasm"
+    directory: "/min-html-wasm"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
@@ -31,25 +31,25 @@ updates:
     open-pull-requests-limit: 10
 
   - package-ecosystem: "pip"
-    directory: "/minify-html-python"
+    directory: "/min-html-python"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "pip"
-    directory: "/minify-html-onepass-python"
+    directory: "/min-html-onepass-python"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "maven"
-    directory: "/minify-html-java"
+    directory: "/min-html-java"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "bundler"
-    directory: "/minify-html-ruby"
+    directory: "/min-html-ruby"
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10

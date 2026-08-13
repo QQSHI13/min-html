@@ -8,7 +8,7 @@ npx prettier@2.3.2 -w \
   'bench/*.{js,json}' \
   'bench/runners/*.{js,json}' \
   'bench/runners/*/*.{js,json}' \
-  'minify-html-nodejs/*.{js,json,ts}' \
+  'min-html-nodejs/*.{js,json,ts}' \
   'version'
 
 cargo +nightly fmt

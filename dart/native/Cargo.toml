@@ -1,5 +1,5 @@
 [package]
-name = "minify-html-native"
+name = "min-html-native"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,4 +9,4 @@ name = "minifyhtml"
 crate-type = ["cdylib"]
 
 [dependencies]
-minify-html = { version = "0.10.8", path = "../../rust/main" }
+min-html = { version = "0.18.1", path = "../../min-html" }

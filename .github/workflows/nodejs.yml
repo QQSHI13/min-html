@@ -47,7 +47,7 @@ jobs:
         run: sudo apt install -y gcc-aarch64-linux-gnu
 
       - name: Build native module
-        working-directory: ./minify-html-nodejs
+        working-directory: ./min-html-nodejs
         shell: bash
         run: |
           npm install
@@ -63,7 +63,7 @@ jobs:
         with:
           access: public
           token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: ./minify-html-nodejs/plat-pkg
+          package: ./min-html-nodejs/plat-pkg
 
   package:
     runs-on: ubuntu-latest
@@ -78,7 +78,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Prepare package
-        working-directory: ./minify-html-nodejs
+        working-directory: ./min-html-nodejs
         run: |
           # npm refuses to work with symlinks.
           cp ../README.md .
@@ -89,4 +89,4 @@ jobs:
         with:
           access: public
           token: ${{ secrets.NPM_AUTH_TOKEN }}
-          package: ./minify-html-nodejs
+          package: ./min-html-nodejs

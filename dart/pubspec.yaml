@@ -1,4 +1,4 @@
-name: minify_html
+name: min_html
 description: Extremely fast and smart HTML + JS + CSS minifier
 version: 0.10.8
 # repository: https://github.com/my_org/my_repo

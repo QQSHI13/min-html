@@ -1,6 +1,6 @@
 # Benchmarking
 
-This folder contains scripts used to test the performance and effectiveness of minify-html, for guided optimisation and/or comparisons.
+This folder contains scripts used to test the performance and effectiveness of min-html, for guided optimisation and/or comparisons.
 
 It also contains a set of common web pages as inputs for benchmarking.
 
@@ -32,7 +32,7 @@ On this [project's README](../README.md), average graphs are shown. Graphs showi
 
 <img width="435" alt="Chart showing speed of HTML minifiers per input" src="./graphs/speeds.png"><img width="435" alt="Chart showing effectiveness of HTML minifiers per input" src="./graphs/sizes.png">
 
-Results depend on the input, so charts show performance relative to minify-html as a percentage.
+Results depend on the input, so charts show performance relative to min-html as a percentage.
 
 ## Running
 

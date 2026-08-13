@@ -32,12 +32,12 @@ jobs:
           version: 'latest'
 
       - name: Build native module
-        working-directory: ./minify-html-wasm
+        working-directory: ./min-html-wasm
         shell: bash
         run: TARGET=deno ./build
 
       - name: Publish to JSR
-        working-directory: ./minify-html-wasm
+        working-directory: ./min-html-wasm
         run: |
           # Sadly `jsr` ignores .gitignore files (i.e. our built dist package) and will fail on a dirty repo,
           # contrary to almost every other build/package system.

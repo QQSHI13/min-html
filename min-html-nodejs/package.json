@@ -1,0 +1,59 @@
+{
+  "name": "@min-html/node",
+  "description": "Extremely fast and smart HTML + JS + CSS minifier",
+  "bin": {
+    "min-html": "./cli.js"
+  },
+  "main": "index.js",
+  "files": [
+    "cli.js",
+    "index.d.ts",
+    "index.js",
+    "README.md"
+  ],
+  "version": "0.18.1",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "cargo-cp-artifact --artifact cdylib min-html-nodejs index.node -- cargo build --message-format=json-render-diagnostics",
+    "build-debug": "npm run build --",
+    "build-release": "npm run build -- --release",
+    "clean": "shx rm -rf target index.node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QQSHI13/min-html.git"
+  },
+  "author": {
+    "email": "code@wilsonl.in",
+    "name": "Wilson Lin",
+    "url": "https://wilsonl.in/"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/QQSHI13/min-html/issues"
+  },
+  "engines": {
+    "node": ">= 8.6.0"
+  },
+  "homepage": "https://github.com/QQSHI13/min-html#readme",
+  "optionalDependencies": {
+    "@min-html/node-darwin-arm64": "0.18.1",
+    "@min-html/node-darwin-x64": "0.18.1",
+    "@min-html/node-linux-arm64": "0.18.1",
+    "@min-html/node-linux-x64": "0.18.1",
+    "@min-html/node-win32-x64": "0.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "cargo-cp-artifact": "^0.1",
+    "shx": "^0.4.0"
+  },
+  "keywords": [
+    "compress",
+    "compressor",
+    "fast",
+    "html",
+    "minifier",
+    "minify"
+  ]
+}

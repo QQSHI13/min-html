@@ -1,13 +1,13 @@
 <h1>
-minify-html
-<img width="24" src="https://wilsonl.in/minify-html/icon/cli.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/deno.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/java.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/nodejs.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/python.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/ruby.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/rust.png">
-<img width="24" src="https://wilsonl.in/minify-html/icon/wasm.png">
+min-html
+<img width="24" src="https://wilsonl.in/min-html/icon/cli.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/deno.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/java.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/nodejs.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/python.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/ruby.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/rust.png">
+<img width="24" src="https://wilsonl.in/min-html/icon/wasm.png">
 </h1>
 
 A Rust HTML minifier meticulously optimised for speed and effectiveness, with bindings for other languages.
@@ -24,12 +24,12 @@ Comparison with [html-minifier](https://github.com/kangax/html-minifier) and [mi
 
 <img width="400" alt="Chart showing speed of HTML minifiers" src="./bench/graphs/average-speeds.png"><img width="400" alt="Chart showing compression of HTML minifiers" src="./bench/graphs/average-sizes.png">
 
-The [onepass](https://github.com/wilsonzlin/minify-html/tree/master/minify-html-onepass) variant is even more optimised for speed. See its [README](https://github.com/wilsonzlin/minify-html/tree/master/minify-html-onepass) for more details.
+The [onepass](https://github.com/QQSHI13/min-html/tree/master/min-html-onepass) variant is even more optimised for speed. See its [README](https://github.com/QQSHI13/min-html/tree/master/min-html-onepass) for more details.
 
 ## Compatibility and usage
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/cli.png"> <strong>CLI</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/cli.png"> <strong>CLI</strong></summary>
 
 The CLI is called [minhtml](./minhtml).
 Precompiled binaries are available for Linux (ARM64 and x64), macOS (ARM64 and x64), and Windows (x64).
@@ -54,25 +54,25 @@ minhtml --keep-closing-tags --minify-css /path/to/**/*.html
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/rust.png"> <strong>Rust</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/rust.png"> <strong>Rust</strong></summary>
 
 ### Get
 
 ```toml
 [dependencies]
-minify-html = "0.18.1"
+min-html = "0.18.1"
 ```
 
 ### Use
 
-Check out the [docs](https://docs.rs/minify-html) for API and usage examples.
+Check out the [docs](https://docs.rs/min-html) for API and usage examples.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/deno.png"> <strong>Deno</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/deno.png"> <strong>Deno</strong></summary>
 
-- Package: [@minify-html/deno](https://jsr.io/@minify-html/deno/)
+- Package: [@min-html/deno](https://jsr.io/@min-html/deno/)
 - Binding: [WASM](https://webassembly.org/)
 - Platforms: All
 
@@ -81,13 +81,13 @@ Check out the [docs](https://docs.rs/minify-html) for API and usage examples.
 Add the JSR package:
 
 ```
-deno add jsr:@minify-html/deno
+deno add jsr:@min-html/deno
 ```
 
 ### Use
 
 ```ts
-import init, {minify} from "@minify-html/deno";
+import init, {minify} from "@min-html/deno";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -97,14 +97,14 @@ await init();
 const minified = decoder.decode(minify(encoder.encode("<p>  Hello, world!  </p>"), { keep_spaces_between_attributes: true, keep_comments: true }));
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/nodejs.png"> <strong>Node.js</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/nodejs.png"> <strong>Node.js</strong></summary>
 
-- Package: [@minify-html/node](https://www.npmjs.com/package/@minify-html/node)
+- Package: [@min-html/node](https://www.npmjs.com/package/@min-html/node)
 - Binding: [Neon](https://github.com/neon-bindings/neon)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Node.js 10.0.0 and higher
 
@@ -113,13 +113,13 @@ All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.htm
 Using npm:
 
 ```bash
-npm i @minify-html/node
+npm i @min-html/node
 ```
 
 Using Yarn:
 
 ```bash
-yarn add @minify-html/node
+yarn add @min-html/node
 ```
 
 ### Use
@@ -128,20 +128,20 @@ TypeScript definitions are available.
 
 ```ts
 import { Buffer } from "node:buffer";
-import minifyHtml from "@minify-html/node";
-// Or `const minifyHtml = require("@minify-html/node")` if not using TS/ESM.
+import minifyHtml from "@min-html/node";
+// Or `const minifyHtml = require("@min-html/node")` if not using TS/ESM.
 
 const minified = minifyHtml.minify(Buffer.from("<p>  Hello, world!  </p>"), { keep_spaces_between_attributes: true, keep_comments: true });
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/java.png"> <strong>Java</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/java.png"> <strong>Java</strong></summary>
 
-- Package: [in.wilsonl.minifyhtml](https://search.maven.org/artifact/in.wilsonl.minifyhtml/minify-html)
+- Package: [com.qqshi13.minhtml](https://search.maven.org/artifact/com.qqshi13.minhtml/min-html)
 - Binding: [JNI](https://github.com/jni-rs/jni-rs)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Java 8 and higher
 
@@ -151,8 +151,8 @@ Add as a Maven dependency:
 
 ```xml
 <dependency>
-  <groupId>in.wilsonl.minifyhtml</groupId>
-  <artifactId>minify-html</artifactId>
+  <groupId>com.qqshi13.minhtml</groupId>
+  <artifactId>min-html</artifactId>
   <version>0.18.1</version>
 </dependency>
 ```
@@ -160,8 +160,8 @@ Add as a Maven dependency:
 ### Use
 
 ```java
-import in.wilsonl.minifyhtml.Configuration;
-import in.wilsonl.minifyhtml.MinifyHtml;
+import com.qqshi13.minhtml.Configuration;
+import com.qqshi13.minhtml.MinifyHtml;
 
 Configuration cfg = new Configuration.Builder()
     .setKeepHtmlAndHeadOpeningTags(true)
@@ -171,14 +171,14 @@ Configuration cfg = new Configuration.Builder()
 String minified = MinifyHtml.minify("<p>  Hello, world!  </p>", cfg);
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available as camelCase setter methods on the `Builder`; if any are not set, they default to `false`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available as camelCase setter methods on the `Builder`; if any are not set, they default to `false`.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/python.png"> <strong>Python</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/python.png"> <strong>Python</strong></summary>
 
-- Package: [minify-html](https://pypi.org/project/minify-html)
+- Package: [min-html](https://pypi.org/project/min-html)
 - Binding: [PyO3](https://github.com/PyO3/pyo3)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Python 3.8 to 3.14
 
@@ -189,19 +189,19 @@ Add the PyPI project as a dependency and install it using `pip` or `pipenv`.
 ### Use
 
 ```python
-import minify_html
+import min_html
 
-minified = minify_html.minify("<p>  Hello, world!  </p>", minify_js=True, remove_processing_instructions=True)
+minified = min_html.minify("<p>  Hello, world!  </p>", minify_js=True, remove_processing_instructions=True)
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available as Python keyword arguments; if any are omitted, they default to `False`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available as Python keyword arguments; if any are omitted, they default to `False`.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/ruby.png"> <strong>Ruby</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/ruby.png"> <strong>Ruby</strong></summary>
 
-- Package: [minify_html](https://rubygems.org/gems/minify_html)
+- Package: [min_html](https://rubygems.org/gems/min_html)
 - Binding: [rb-sys](https://github.com/oxidize-rb/rb-sys) and [magnus](https://github.com/matsadler/magnus)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Ruby 3.2 to 3.4
 
@@ -212,19 +212,19 @@ Add the library as a dependency to `Gemfile` or `*.gemspec`.
 ### Use
 
 ```ruby
-require 'minify_html'
+require 'min_html'
 
-print minify_html("<p>  Hello, world!  </p>", { :keep_spaces_between_attributes => true, :minify_js => true })
+print min_html("<p>  Hello, world!  </p>", { :keep_spaces_between_attributes => true, :minify_js => true })
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available; if any are omitted, they default to `false`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available; if any are omitted, they default to `false`.
 
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/minify-html/icon/wasm.png"> <strong>WASM</strong></summary>
+<summary><img width="24" src="https://wilsonl.in/min-html/icon/wasm.png"> <strong>WASM</strong></summary>
 
-- Package: [@minify-html/wasm](https://npmjs.org/package/@minify-html/wasm)
+- Package: [@min-html/wasm](https://npmjs.org/package/@min-html/wasm)
 - Binding: [WASM](https://webassembly.org/)
 - Platforms: All
 
@@ -233,7 +233,7 @@ A bundler may be required to use the WebAssembly module, see [this](https://rust
 ### Use
 
 ```ts
-import init, {minify} from "@minify-html/wasm";
+import init, {minify} from "@min-html/wasm";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();
@@ -243,13 +243,13 @@ await init();
 const minified = decoder.decode(minify(encoder.encode("<p>  Hello, world!  </p>"), { keep_spaces_between_attributes: true, keep_comments: true }));
 ```
 
-All [`Cfg` fields](https://docs.rs/minify-html/latest/minify_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
+All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are available as snake_case properties on the object provided as the second argument; if any are not set, they default to `false`.
 
 </details>
 
 ## Templating syntax
 
-minify-html can parse and preserve `{{`/`{%`/`{#` and `<%` syntax in the source code, which allows minification of many HTML templates written for most engines like Pebble, Mustache, Django, Go, Jinja, Twix, Nunjucks, Handlebars, Sailfish, JSP, EJS, and ERB. Look for the `preserve_*_template_syntax` Cfg options.
+min-html can parse and preserve `{{`/`{%`/`{#` and `<%` syntax in the source code, which allows minification of many HTML templates written for most engines like Pebble, Mustache, Django, Go, Jinja, Twix, Nunjucks, Handlebars, Sailfish, JSP, EJS, and ERB. Look for the `preserve_*_template_syntax` Cfg options.
 
 PHP blocks (`<?php` or `<?=`) also happen to be processing instructions, which are preserved by default.
 
@@ -272,7 +272,7 @@ In Rust, `Cfg::enable_possibly_noncompliant` can enable all of these at once.
 
 ### Whitespace
 
-minify-html has advanced context-aware whitespace minification that does things such as:
+min-html has advanced context-aware whitespace minification that does things such as:
 
 - Leave whitespace untouched in `pre` and `code`, which are whitespace sensitive.
 - Trim and collapse whitespace in content tags, as whitespace is collapsed anyway when rendered.
@@ -280,12 +280,12 @@ minify-html has advanced context-aware whitespace minification that does things 
 
 #### Methods
 
-There are three whitespace minification methods. When processing text content, minify-html chooses which ones to use depending on the containing element.
+There are three whitespace minification methods. When processing text content, min-html chooses which ones to use depending on the containing element.
 
 <details>
 <summary><strong>Collapse whitespace</strong></summary>
 
-> **Applies to:** any element except [whitespace sensitive](./minify-html-common/src/spec/tag/whitespace.rs) elements.
+> **Applies to:** any element except [whitespace sensitive](./min-html-common/src/spec/tag/whitespace.rs) elements.
 
 Reduce a sequence of whitespace characters in text nodes to a single space (U+0020).
 
@@ -311,7 +311,7 @@ Reduce a sequence of whitespace characters in text nodes to a single space (U+00
 <details>
 <summary><strong>Destroy whole whitespace</strong></summary>
 
-> **Applies to:** any element except [whitespace sensitive](./minify-html-common/src/spec/tag/whitespace.rs), [content](src/spec/tag/whitespace.rs), [content-first](./minify-html-common/src/spec/tag/whitespace.rs), and [formatting](./minify-html-common/src/spec/tag/whitespace.rs) elements.
+> **Applies to:** any element except [whitespace sensitive](./min-html-common/src/spec/tag/whitespace.rs), [content](src/spec/tag/whitespace.rs), [content-first](./min-html-common/src/spec/tag/whitespace.rs), and [formatting](./min-html-common/src/spec/tag/whitespace.rs) elements.
 
 Remove any text nodes between tags that only consist of whitespace characters.
 
@@ -339,7 +339,7 @@ Remove any text nodes between tags that only consist of whitespace characters.
 <details>
 <summary><strong>Trim whitespace</strong></summary>
 
-> **Applies to:** any element except [whitespace sensitive](./minify-html-common/src/spec/tag/whitespace.rs) and [formatting](./minify-html-common/src/spec/tag/whitespace.rs) elements.
+> **Applies to:** any element except [whitespace sensitive](./min-html-common/src/spec/tag/whitespace.rs) and [formatting](./min-html-common/src/spec/tag/whitespace.rs) elements.
 
 Remove any leading/trailing whitespace from any leading/trailing text nodes of a tag.
 
@@ -366,14 +366,14 @@ Remove any leading/trailing whitespace from any leading/trailing text nodes of a
 
 #### Element types
 
-minify-html assumes HTML and SVG elements are used in specific ways, based on standards and best practices. By making these assumptions, it can apply optimal whitespace minification strategies. If these assumptions do not hold, consider adjusting the HTML source or turning off whitespace minification.
+min-html assumes HTML and SVG elements are used in specific ways, based on standards and best practices. By making these assumptions, it can apply optimal whitespace minification strategies. If these assumptions do not hold, consider adjusting the HTML source or turning off whitespace minification.
 
 |Group|Elements|Expected children|
 |---|---|---|
-|Formatting|`a`, `strong`, [and others](./minify-html-common/src/spec/tag/whitespace.rs)|Formatting elements, text.|
-|Content|`h1`, `p`, [and others](./minify-html-common/src/spec/tag/whitespace.rs)|Formatting elements, text.|
-|Layout|`div`, `ul`, [and others](./minify-html-common/src/spec/tag/whitespace.rs)|Layout elements, content elements.|
-|Content-first|`label`, `li`, [and others](./minify-html-common/src/spec/tag/whitespace.rs)|Like content but could be layout with only one child.|
+|Formatting|`a`, `strong`, [and others](./min-html-common/src/spec/tag/whitespace.rs)|Formatting elements, text.|
+|Content|`h1`, `p`, [and others](./min-html-common/src/spec/tag/whitespace.rs)|Formatting elements, text.|
+|Layout|`div`, `ul`, [and others](./min-html-common/src/spec/tag/whitespace.rs)|Layout elements, content elements.|
+|Content-first|`label`, `li`, [and others](./min-html-common/src/spec/tag/whitespace.rs)|Like content but could be layout with only one child.|
 
 <details>
 <summary><strong>Formatting elements</strong></summary>
@@ -502,10 +502,10 @@ Bangs, [processing instructions](https://en.wikipedia.org/wiki/Processing_Instru
 
 ## Parsing
 
-minify-html can process any HTML, handling all possible syntax (including invalid ones) gracefully like browsers. See [Parsing.md](./notes/Parsing.md) for more details.
+min-html can process any HTML, handling all possible syntax (including invalid ones) gracefully like browsers. See [Parsing.md](./notes/Parsing.md) for more details.
 
 ## Issues and contributions
 
 Pull requests and any contributions welcome!
 
-If minify-html did something unexpected, misunderstood some syntax, or incorrectly kept/removed some code, [raise an issue](https://github.com/wilsonzlin/minify-html/issues) with some relevant code that can be used to reproduce and investigate the issue.
+If min-html did something unexpected, misunderstood some syntax, or incorrectly kept/removed some code, [raise an issue](https://github.com/QQSHI13/min-html/issues) with some relevant code that can be used to reproduce and investigate the issue.

@@ -1,6 +1,6 @@
 # minhtml
 
-CLI for [minify-html](https://github.com/wilsonzlin/minify-html).
+CLI for [min-html](https://github.com/QQSHI13/min-html).
 
 ## Usage
 
