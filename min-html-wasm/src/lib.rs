@@ -3,12 +3,6 @@ mod utils;
 use js_sys::Reflect;
 use wasm_bindgen::prelude::*;
 
-// When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-// allocator.
-#[cfg(feature = "wee_alloc")]
-#[global_allocator]
-static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-
 macro_rules! get_prop {
   ($cfg:expr, $x:literal) => {
     Reflect::get($cfg, &JsValue::from_str($x))
