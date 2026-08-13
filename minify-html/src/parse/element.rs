@@ -26,6 +26,7 @@ use minify_html_common::spec::tag::void::VOID_TAGS;
 use minify_html_common::spec::tag::whitespace::HTML_TAG_WHITESPACE_MINIFICATION;
 use std::fmt::Debug;
 use std::fmt::Formatter;
+use std::io::Write;
 use std::str::from_utf8;
 
 fn parse_tag_name_raw(code: &mut Code) -> Vec<u8> {
@@ -100,16 +101,52 @@ pub fn parse_tag(code: &mut Code, ns: Namespace) -> ParsedTag {
       break;
     };
     let mut attr_name = Vec::new();
-    // An attribute name can start with `=`, but ends at the next whitespace, `=`, `/`, or `>`.
-    if let Some(c) = code.shift_if_next_not_in_lookup(WHITESPACE_OR_SLASH) {
-      attr_name.push(c);
-    };
-    attr_name.extend_from_slice(
-      code.slice_and_shift_while_not_in_lookup(WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_CHEVRON),
-    );
-    debug_assert!(!attr_name.is_empty());
-    if ns == Namespace::Html {
-      attr_name.make_ascii_lowercase();
+
+    // preserve template passthrough behavior in tags
+    let mut template_enclosures = Vec::new();
+
+    if code.opts.treat_brace_as_opaque {
+      template_enclosures.extend_from_slice(&[
+        ("{{".as_bytes(), "}}".as_bytes()),
+        ("{%".as_bytes(), "%}".as_bytes()),
+        ("{#".as_bytes(), "#}".as_bytes()),
+      ]);
+    }
+
+    if code.opts.treat_chevron_percent_as_opaque {
+      template_enclosures.push(("<%".as_bytes(), "%>".as_bytes()));
+    }
+
+    let mut template_attr_name = false;
+    for (opening, closing) in template_enclosures {
+      if code.shift_if_next_seq_case_insensitive(opening) {
+        let _ = attr_name.write(opening);
+        loop {
+          attr_name.extend_from_slice(code.slice_and_shift_while_not_seq_case_insensitive(closing));
+
+          match code.shift_if_next_not_in_lookup(WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_CHEVRON) {
+            Some(c) => attr_name.push(c),
+            None => break,
+          }
+        }
+        template_attr_name = true;
+        break;
+      }
+    }
+
+    if !template_attr_name {
+      // An attribute name can start with `=`, but ends at the next whitespace, `=`, `/`, or `>`.
+      if let Some(c) = code.shift_if_next_not_in_lookup(WHITESPACE_OR_SLASH) {
+        attr_name.push(c);
+      }
+
+      attr_name.extend_from_slice(
+        code.slice_and_shift_while_not_in_lookup(WHITESPACE_OR_SLASH_OR_EQUALS_OR_RIGHT_CHEVRON),
+      );
+      debug_assert!(!attr_name.is_empty());
+      if ns == Namespace::Html {
+        attr_name.make_ascii_lowercase();
+      }
     }
     // See comment for WHITESPACE_OR_SLASH in codepoints.ts for details of complex attr parsing.
     code.shift_while_in_lookup(WHITESPACE);

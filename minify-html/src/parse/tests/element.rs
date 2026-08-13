@@ -56,7 +56,8 @@ fn test_parse_svg_preserves_case() {
   let mut code = Code::new(
     br###"<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid"><linearGradient></linearGradient></svg>"###,
   );
-  let elem = parse_element(&mut code, Namespace::Html, EMPTY_SLICE);
+  let cfg = Cfg::new();
+  let elem = parse_element(&cfg, &mut code, Namespace::Html, EMPTY_SLICE);
   let NodeData::Element {
     attributes,
     children,
