@@ -61,7 +61,7 @@ pub fn process_script(
         let parser_ret = Parser::new(&allocator, source_text, source_type).parse();
 
         // Only proceed if parsing succeeded without errors
-        if parser_ret.errors.is_empty() {
+        if parser_ret.diagnostics.is_empty() {
           let mut program = parser_ret.program;
 
           // Apply minification
