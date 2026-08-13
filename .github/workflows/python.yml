@@ -6,6 +6,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # How cross compilation works with PyO3/maturin-action:
 # - For Linux targets, it uses Docker.
 # - For other targets, it runs on the host (Docker mostly only supports Linux containers).

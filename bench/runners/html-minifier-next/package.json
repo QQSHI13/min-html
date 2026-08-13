@@ -1,6 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "html-minifier": "4.0.0"
+    "html-minifier-next": "^5.0.0"
   }
 }

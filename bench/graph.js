@@ -146,12 +146,12 @@ const renderChart = (cfg, width, height) =>
 
   const res = results.calculate();
   const speedMinifiers = [
-    "html-minifier",
+    "html-minifier-next",
     "minimize",
     "min-html",
     "min-html-onepass",
   ];
-  const sizeMinifiers = ["minimize", "html-minifier", "min-html"];
+  const sizeMinifiers = ["minimize", "html-minifier-next", "min-html"];
   const inputs = Object.keys(res.inputSizes).sort();
 
   await fs.writeFile(

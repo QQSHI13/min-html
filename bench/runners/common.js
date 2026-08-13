@@ -36,26 +36,28 @@ module.exports = {
       sourcemap: false,
     }).code,
 
-  run: (minifierFn) => {
+  run: async (minifierFn) => {
     console.log(
       JSON.stringify(
-        fs.readdirSync(inputDir).map((name) => {
-          const src = fs.readFileSync(path.join(inputDir, name));
+        await Promise.all(
+          fs.readdirSync(inputDir).map(async (name) => {
+            const src = fs.readFileSync(path.join(inputDir, name));
 
-          const out = minifierFn(src);
-          const len = Buffer.from(out).length;
-          if (outputDir) {
-            fs.writeFileSync(path.join(outputDir, name), out);
-          }
+            const out = await Promise.resolve(minifierFn(src));
+            const len = Buffer.from(out).length;
+            if (outputDir) {
+              fs.writeFileSync(path.join(outputDir, name), out);
+            }
 
-          const start = process.hrtime.bigint();
-          for (let i = 0; i < iterations; i++) {
-            minifierFn(src);
-          }
-          const elapsed = process.hrtime.bigint() - start;
+            const start = process.hrtime.bigint();
+            for (let i = 0; i < iterations; i++) {
+              await Promise.resolve(minifierFn(src));
+            }
+            const elapsed = process.hrtime.bigint() - start;
 
-          return [name, len, iterations, Number(elapsed) / 1_000_000_000];
-        })
+            return [name, len, iterations, Number(elapsed) / 1_000_000_000];
+          })
+        )
       )
     );
   },

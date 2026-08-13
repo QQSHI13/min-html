@@ -1,4 +1,4 @@
-const htmlMinifier = require("html-minifier");
+const { minify } = require("html-minifier-next");
 const { htmlOnly, esbuildCss, esbuildJs, run } = require("../common");
 
 const htmlMinifierCfg = {
@@ -6,7 +6,7 @@ const htmlMinifierCfg = {
   collapseInlineTagWhitespace: true,
   collapseWhitespace: true,
   // min-html can do context-aware whitespace removal, which is safe when configured correctly to match how whitespace is used in the document.
-  // html-minifier cannot, so whitespace must be collapsed conservatively.
+  // html-minifier-next cannot, so whitespace must be collapsed conservatively.
   // Alternatively, min-html can also be made to remove whitespace regardless of context.
   conservativeCollapse: true,
   customEventAttributes: [],
@@ -27,4 +27,4 @@ const htmlMinifierCfg = {
   useShortDoctype: true,
 };
 
-run((src) => htmlMinifier.minify(src.toString(), htmlMinifierCfg));
+run((src) => minify(src.toString(), htmlMinifierCfg));

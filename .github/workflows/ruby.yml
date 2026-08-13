@@ -6,6 +6,9 @@ on:
       - 'v*'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # https://github.com/oxidize-rb/actions/tree/main/cross-gem
 # https://github.com/gjtorikian/commonmarker/blob/main/.github/workflows/tag_and_release.yml
 # https://github.com/yettoapp/actions/blob/main/.github/workflows/ruby_gem_release.yml
