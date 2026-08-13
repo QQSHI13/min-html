@@ -5,6 +5,7 @@ use crate::cfg::Cfg;
 use crate::entity::encode::encode_entities;
 use crate::minify::bang::minify_bang;
 use crate::minify::comment::minify_comment;
+#[cfg(feature = "lightningcss")]
 use crate::minify::css::minify_css;
 use crate::minify::doctype::minify_doctype;
 use crate::minify::element::minify_element;
@@ -153,7 +154,10 @@ pub fn minify_content(
       NodeData::RcdataContent { typ, text } => minify_rcdata(cfg, out, typ, &text),
       NodeData::ScriptOrStyleContent { code, lang: _ } if code.is_empty() => {}
       NodeData::ScriptOrStyleContent { code, lang } => match lang {
+        #[cfg(feature = "lightningcss")]
         ScriptOrStyleLang::CSS => minify_css(cfg, out, &code),
+        #[cfg(not(feature = "lightningcss"))]
+        ScriptOrStyleLang::CSS => out.extend_from_slice(&code),
         ScriptOrStyleLang::Data => out.extend_from_slice(&code),
         ScriptOrStyleLang::JS => minify_js(cfg, TopLevelMode::Global, out, &code),
         ScriptOrStyleLang::JSModule => minify_js(cfg, TopLevelMode::Module, out, &code),
