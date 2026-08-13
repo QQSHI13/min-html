@@ -7,7 +7,7 @@ use minify_html_common::tests::create_common_test_data;
 use std::str::from_utf8;
 
 pub fn eval_with_cfg(src: &'static [u8], expected: &'static [u8], cfg: &Cfg) {
-  let min = minify(&src, cfg);
+  let min = minify(src, cfg);
   assert_eq!(from_utf8(&min).unwrap(), from_utf8(expected).unwrap(),);
 }
 
@@ -17,28 +17,34 @@ pub fn eval_with_noncompliant(src: &'static [u8], expected: &'static [u8]) {
   eval_with_cfg(src, expected, &cfg)
 }
 
-pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_js = true;
+pub fn eval_with_js_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_js: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
-pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) -> () {
-  let mut cfg = Cfg::new();
-  cfg.minify_css = true;
+pub fn eval_with_css_min(src: &'static [u8], expected: &'static [u8]) {
+  let cfg = Cfg {
+    minify_css: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
 pub fn eval(src: &'static [u8], expected: &'static [u8]) {
-  let mut cfg = Cfg::new();
   // Most common tests assume the following minifications aren't done.
-  cfg.keep_html_and_head_opening_tags = true;
-  cfg.allow_optimal_entities = true;
+  let cfg = Cfg {
+    keep_html_and_head_opening_tags: true,
+    allow_optimal_entities: true,
+    ..Cfg::new()
+  };
   eval_with_cfg(src, expected, &cfg);
 }
 
 // NOTE: This is different to `eval` as that enables `keep_html_and_head_opening_tags`.
-fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) -> () {
+fn eval_without_keep_html_head(src: &'static [u8], expected: &'static [u8]) {
   eval_with_cfg(src, expected, &Cfg::new());
 }
 
@@ -61,16 +67,20 @@ fn test_common() {
 #[test]
 fn test_keep_ssi_comments() {
   eval(b"<!--#include >", b"");
-  let mut cfg = Cfg::default();
-  cfg.keep_ssi_comments = true;
+  let cfg = Cfg {
+    keep_ssi_comments: true,
+    ..Default::default()
+  };
   eval_with_cfg(b"<!--#include >", b"<!--#include >", &cfg);
 }
 
 #[test]
 fn test_keep_input_type_text_attr() {
   eval(b"<input type=\"text\">", b"<input>");
-  let mut cfg = Cfg::default();
-  cfg.keep_input_type_text_attr = true;
+  let cfg = Cfg {
+    keep_input_type_text_attr: true,
+    ..Default::default()
+  };
   eval_with_cfg(b"<input type=\"TExt\">", b"<input type=text>", &cfg);
 }
 
@@ -80,8 +90,10 @@ fn test_preserve_template_brace_syntax() {
     b"<p> {{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }} </p>",
     b"<p>{{ hello world! %} {%}{#} echo '<p><script>let x=1;",
   );
-  let mut cfg = Cfg::default();
-  cfg.preserve_brace_template_syntax = true;
+  let cfg = Cfg {
+    preserve_brace_template_syntax: true,
+    ..Default::default()
+  };
   eval_with_cfg(
     b"<p> {{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }} </p>",
     b"<p>{{   hello    world! %}  {%}{#} echo '  </p><P><script>  let x = 1; //'  }}",
@@ -101,8 +113,10 @@ fn test_preserve_template_brace_syntax() {
 
 #[test]
 fn test_preserve_template_chevron_percent_syntax() {
-  let mut cfg = Cfg::default();
-  cfg.preserve_chevron_percent_template_syntax = true;
+  let cfg = Cfg {
+    preserve_chevron_percent_template_syntax: true,
+    ..Default::default()
+  };
   eval_with_cfg(
     b"<p> <%   hello    world! #}  {#}{# echo '  </p><P><script>  let x = 1; //'  %> </p>",
     b"<p><%   hello    world! #}  {#}{# echo '  </p><P><script>  let x = 1; //'  %>",

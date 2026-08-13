@@ -34,7 +34,7 @@ pub struct Code<'c> {
 pub struct Checkpoint(usize);
 
 impl<'c> Code<'c> {
-  pub fn new_with_opts(code: &[u8], opts: ParseOpts) -> Code {
+  pub fn new_with_opts(code: &[u8], opts: ParseOpts) -> Code<'_> {
     Code {
       code,
       next: 0,
@@ -46,7 +46,7 @@ impl<'c> Code<'c> {
     }
   }
 
-  pub fn new(code: &[u8]) -> Code {
+  pub fn new(code: &[u8]) -> Code<'_> {
     Code::new_with_opts(code, ParseOpts::default())
   }
 
