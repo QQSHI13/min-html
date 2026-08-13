@@ -2,10 +2,38 @@
 
 ## Pending
 
+- Disable treeshake annotations (e.g., `/*#__PURE__*/`) in minified JavaScript output as they are only useful for bundlers, not inline scripts.
+- [Ruby] Add Ruby 4.0 support. Drop unmaintained Ruby 2.7, 3.0, 3.1, and 3.2.
+
+## 0.18.1
+
+- Fix WASM builds.
+
+## 0.18.0
+
+- Fix WASM builds.
+- [Java] BREAKING: Minimum Java version increased from 7 to 8.
+
+## 0.17.1
+
+- Bump Ubuntu version for GitHub Actions.
+
+## 0.17.0
+
+- [Node.js] BREAKING: Minimum Node.js version increased from 8.6.0 to 10.0.0.
+- [Ruby] BREAKING: Minimum Ruby version increased from 2.7 to 3.2.
+- Replace minify-js with [oxc_minifier](https://github.com/oxc-project/oxc) for JavaScript minification.
+- [Python] Add musl builds for Linux.
+- Bump Windows version for GitHub Actions.
+- Migrate to Central Portal for Java.
+
+## 0.16.5
+
 - Bump Java version for GitHub Actions.
 - [CLI] Add missing exit status on I/O errors.
 - [Internal] Loosen ahash dependency version.
 - [Internal] Bump lightningcss.
+- [Python] Add Python 3.14 support.
 
 ## 0.16.4
 

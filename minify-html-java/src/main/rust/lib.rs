@@ -7,7 +7,7 @@ use minify_html::minify as minify_html_native;
 use minify_html::Cfg;
 use std::str::from_utf8;
 
-fn build_cfg(env: &JNIEnv, obj: &JObject) -> Cfg {
+fn build_cfg(env: &mut JNIEnv, obj: &JObject) -> Cfg {
   #[rustfmt::skip]
   // This is a statement because "attributes on expressions are experimental".
   let cfg = Cfg {
@@ -34,15 +34,15 @@ fn build_cfg(env: &JNIEnv, obj: &JObject) -> Cfg {
 
 #[no_mangle]
 pub extern "system" fn Java_in_wilsonl_minifyhtml_MinifyHtml_minifyRs(
-  env: JNIEnv,
+  mut env: JNIEnv,
   _class: JClass,
   input: JString,
   cfg: JObject,
 ) -> jstring {
-  let source: String = env.get_string(input).unwrap().into();
+  let source: String = env.get_string(&input).unwrap().into();
   let code = source.into_bytes();
 
-  let out_code = minify_html_native(&code, &build_cfg(&env, &cfg));
+  let out_code = minify_html_native(&code, &build_cfg(&mut env, &cfg));
   let out_code_str = from_utf8(&out_code).unwrap();
-  env.new_string(out_code_str).unwrap().into_inner()
+  env.new_string(out_code_str).unwrap().into_raw()
 }
