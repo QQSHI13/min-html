@@ -30,6 +30,6 @@ wasm-bindgen-test = "0.3"
 # https://github.com/WebAssembly/wasi-sdk/issues/254
 # https://github.com/rust-lang/rust/issues/137315
 [package.metadata.wasm-pack.profile.release]
-wasm-opt = ["-Oz", "--all-features"]
+wasm-opt = ["-Oz"]
 [package.metadata.wasm-pack.profile.dev]
-wasm-opt = ["-O", "--all-features"]
+wasm-opt = ["-O"]
