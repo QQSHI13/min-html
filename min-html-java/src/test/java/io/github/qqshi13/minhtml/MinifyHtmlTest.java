@@ -1,4 +1,4 @@
-package com.qqshi13.minhtml;
+package io.github.qqshi13.minhtml;
 
 import java.lang.reflect.Method;
 import lombok.val;

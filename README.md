@@ -141,7 +141,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 <details>
 <summary><img width="24" src="./icon/java.png"> <strong>Java</strong></summary>
 
-- Package: [com.qqshi13.minhtml](https://search.maven.org/artifact/com.qqshi13.minhtml/min-html)
+- Package: [io.github.qqshi13](https://search.maven.org/artifact/io.github.qqshi13/min-html)
 - Binding: [JNI](https://github.com/jni-rs/jni-rs)
 - Platforms: Linux (ARM64 and x64), macOS (ARM64 and x64), Windows (x64); Java 8 and higher
 
@@ -151,7 +151,7 @@ Add as a Maven dependency:
 
 ```xml
 <dependency>
-  <groupId>com.qqshi13.minhtml</groupId>
+  <groupId>io.github.qqshi13</groupId>
   <artifactId>min-html</artifactId>
   <version>0.18.4</version>
 </dependency>
@@ -160,8 +160,8 @@ Add as a Maven dependency:
 ### Use
 
 ```java
-import com.qqshi13.minhtml.Configuration;
-import com.qqshi13.minhtml.MinifyHtml;
+import io.github.qqshi13.minhtml.Configuration;
+import io.github.qqshi13.minhtml.MinifyHtml;
 
 Configuration cfg = new Configuration.Builder()
     .setKeepHtmlAndHeadOpeningTags(true)
