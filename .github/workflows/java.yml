@@ -22,27 +22,27 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: aarch64-unknown-linux-gnu
-            os: ubuntu-22.04
+            os: ubuntu-latest
             buildfile: 'libmin_html_java.so'
             resfile: 'linux-aarch64.nativelib'
 
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-22.04
+            os: ubuntu-latest
             buildfile: 'libmin_html_java.so'
             resfile: 'linux-x64.nativelib'
 
           - target: aarch64-apple-darwin
-            os: macos-13
+            os: macos-latest
             buildfile: 'libmin_html_java.dylib'
             resfile: 'mac-aarch64.nativelib'
 
           - target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-latest
             buildfile: 'libmin_html_java.dylib'
             resfile: 'mac-x64.nativelib'
 
           - target: x86_64-pc-windows-msvc
-            os: windows-2022
+            os: windows-latest
             buildfile: 'min_html_java.dll'
             resfile: 'win-x64.nativelib'
     steps:
@@ -73,7 +73,7 @@ jobs:
           path: min-html-java/${{ matrix.resfile }}
 
   package:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build
     steps:
       - uses: actions/checkout@v7

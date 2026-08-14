@@ -23,26 +23,20 @@ jobs:
           - x86_64-pc-windows-msvc
         include:
           - target: aarch64-unknown-linux-gnu
-            os: ubuntu-22.04
+            os: ubuntu-latest
           - target: x86_64-unknown-linux-gnu
-            os: ubuntu-22.04
+            os: ubuntu-latest
           - target: aarch64-apple-darwin
-            os: macos-13
+            os: macos-latest
           - target: x86_64-apple-darwin
-            os: macos-13
+            os: macos-latest
           - target: x86_64-pc-windows-msvc
-            os: windows-2022
+            os: windows-latest
     steps:
       - uses: actions/checkout@v7
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
-        with:
-          node-version: 22.x
-          registry-url: https://registry.npmjs.org/
-
-      - name: Install npm 11
-        run: npm install -g npm@^11.5.1
 
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
@@ -77,12 +71,6 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v7
-        with:
-          node-version: 22.x
-          registry-url: https://registry.npmjs.org/
-
-      - name: Install npm 11
-        run: npm install -g npm@^11.5.1
 
       - name: Prepare package
         working-directory: ./min-html-nodejs
