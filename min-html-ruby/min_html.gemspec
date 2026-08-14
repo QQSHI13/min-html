@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "min_html"
-  spec.version       = "0.18.3"
+  spec.version       = "0.18.4"
   spec.authors       = ["QQSHI13"]
   spec.license       = "MIT"
   # Cargo.toml represents workspace created during CI workflow, required for building native extension from source.

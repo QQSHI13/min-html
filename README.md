@@ -153,7 +153,7 @@ Add as a Maven dependency:
 <dependency>
   <groupId>com.qqshi13.minhtml</groupId>
   <artifactId>min-html</artifactId>
-  <version>0.18.3</version>
+  <version>0.18.4</version>
 </dependency>
 ```
 

@@ -37,6 +37,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
 
+      - name: Install latest npm for OIDC provenance
+        if: "${{ steps.version.outputs.VERSION != '0.0.0' }}"
+        run: npm install -g npm@latest
+
       - name: Publish package
         working-directory: ./min-html-wasm/pkg
         shell: bash

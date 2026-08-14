@@ -1,13 +1,13 @@
 [package]
 publish = false
 name = "min-html-java"
-version = "0.18.3"
+version = "0.18.4"
 authors = ["QQSHI13"]
 edition = "2018"
 
 [dependencies]
 min-html = { path = "../min-html" }
-jni = "0.22"
+jni = "0.21"
 
 [lib]
 crate-type = ["cdylib"]
