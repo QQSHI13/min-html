@@ -2,7 +2,7 @@
 name = "min-html-onepass-bench"
 publish = false
 version = "0.0.1"
-authors = ["Wilson Lin <code@wilsonl.in>"]
+authors = ["QQSHI13"]
 edition = "2018"
 
 [dependencies]

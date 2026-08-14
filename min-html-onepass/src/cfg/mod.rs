@@ -2,8 +2,7 @@
 /// minification approach.
 #[derive(Clone, Default)]
 pub struct Cfg {
-  /// If enabled, JavaScript in `<script>` tags are minified using
-  /// [minify-js](https://github.com/wilsonzlin/minify-js).
+  /// If enabled, JavaScript in `<script>` tags are minified.
   ///
   /// Only `<script>` tags with a valid or no
   /// [MIME type](https://mimesniff.spec.whatwg.org/#javascript-mime-type) is considered to

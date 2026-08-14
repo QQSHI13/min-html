@@ -7,7 +7,7 @@ homepage = "https://github.com/QQSHI13/min-html"
 readme = "README.md"
 repository = "https://github.com/QQSHI13/min-html.git"
 version = "0.18.2"
-authors = ["Wilson Lin <code@wilsonl.in>"]
+authors = ["QQSHI13"]
 edition = "2018"
 
 [lib]

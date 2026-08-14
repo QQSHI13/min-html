@@ -23,11 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/QQSHI13/min-html.git"
   },
-  "author": {
-    "email": "code@wilsonl.in",
-    "name": "Wilson Lin",
-    "url": "https://wilsonl.in/"
-  },
+  "author": "QQSHI13",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/QQSHI13/min-html/issues"

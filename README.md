@@ -474,8 +474,8 @@ Any entities in attribute values are decoded, and then the shortest representati
 
 Attributes have their whitespace (after any decoding) trimmed and collapsed when possible.
 
-[Boolean attribute](https://github.com/wilsonzlin/html-data) values are removed.
-[Some other attributes](https://github.com/wilsonzlin/html-data) are completely removed if their value is empty or the default value after any processing.
+Boolean attribute values are removed.
+Some other attributes are completely removed if their value is empty or the default value after any processing.
 
 `type` attributes on `script` tags with a value equaling a [JavaScript MIME type](https://mimesniff.spec.whatwg.org/#javascript-mime-type) are removed.
 

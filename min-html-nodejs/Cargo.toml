@@ -3,7 +3,7 @@ name = "min-html-nodejs"
 publish = false
 version = "0.18.2"
 description = "Node.js bindings for min-html"
-authors = ["Wilson Lin <code@wilsonl.in>"]
+authors = ["QQSHI13"]
 edition = "2021"
 
 [lib]

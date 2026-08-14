@@ -5,7 +5,7 @@ license = "MIT"
 homepage = "https://github.com/QQSHI13/min-html"
 repository = "https://github.com/QQSHI13/min-html.git"
 version = "0.0.3"
-authors = ["Wilson Lin <code@wilsonl.in>"]
+authors = ["QQSHI13"]
 edition = "2018"
 
 [badges]

@@ -1,8 +1,7 @@
 Gem::Specification.new do |spec|
   spec.name          = "min_html"
   spec.version       = "0.18.2"
-  spec.authors       = ["Wilson Lin"]
-  spec.email         = ["code@wilsonl.in"]
+  spec.authors       = ["QQSHI13"]
   spec.license       = "MIT"
   # Cargo.toml represents workspace created during CI workflow, required for building native extension from source.
   spec.files         = Dir["lib/**", "ext/**", "Cargo.toml", "README.md"]

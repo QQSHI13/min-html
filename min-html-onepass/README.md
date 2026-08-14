@@ -14,8 +14,8 @@ An HTML minifier that provides the functionality of [min-html](https://github.co
 
 The API is different compared to min-html; refer to per-package documentation for more details.
 
-- <img width="24" src="https://wilsonl.in/min-html/icon/python.png"> [min-html-onepass](https://pypi.org/project/min-html-onepass)
-- <img width="24" src="https://wilsonl.in/min-html/icon/rust.png"> [min-html-onepass](https://crates.io/crates/min-html-onepass)
+- <img width="24" src="../icon/python.png"> [min-html-onepass](https://pypi.org/project/min-html-onepass)
+- <img width="24" src="../icon/rust.png"> [min-html-onepass](https://crates.io/crates/min-html-onepass)
 
 If you don't see your preferred language here and the main library supports it, raise an issue.
 

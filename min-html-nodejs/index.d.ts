@@ -28,7 +28,7 @@ export function minify(
     minify_css?: boolean;
     /** Minify DOCTYPEs. Minified DOCTYPEs may not be spec compliant, but will still be parsed correctly by almost all browsers. */
     minify_doctype?: boolean;
-    /** Minify JavaScript in `<script>` tags using [minify-js](https://github.com/wilsonzlin/minify-js). */
+    /** Minify JavaScript in `<script>` tags. */
     minify_js?: boolean;
     /** When `{{`, `{#`, or `{%` are seen in content, all source code until the subsequent matching closing `}}`, `#}`, or `%}` respectively gets piped through untouched. */
     preserve_brace_template_syntax?: boolean;

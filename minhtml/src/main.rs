@@ -66,8 +66,7 @@ struct Cli {
   #[structopt(long)]
   minify_doctype: bool,
 
-  /// Minify JavaScript in `<script>` tags using
-  /// [minify-js](https://github.com/wilsonzlin/minify-js).
+  /// Minify JavaScript in `<script>` tags.
   ///
   /// Only `<script>` tags with a valid or no
   /// [MIME type](https://mimesniff.spec.whatwg.org/#javascript-mime-type) is considered to
