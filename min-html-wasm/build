@@ -6,6 +6,9 @@ pushd "$(dirname "$0")" >/dev/null
 
 target="${TARGET:-bundler}"
 
+# getrandom 0.3 requires this cfg flag to build for wasm32-unknown-unknown.
+export RUSTFLAGS='--cfg getrandom_backend="wasm_js"'
+
 rm -rf pkg
 wasm-pack build --target "$target"
 pushd pkg

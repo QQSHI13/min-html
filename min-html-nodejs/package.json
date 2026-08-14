@@ -11,7 +11,7 @@
     "index.js",
     "README.md"
   ],
-  "version": "0.18.2",
+  "version": "0.18.3",
   "types": "index.d.ts",
   "scripts": {
     "build": "cargo-cp-artifact --artifact cdylib min-html-nodejs index.node -- cargo build --message-format=json-render-diagnostics",
@@ -33,11 +33,11 @@
   },
   "homepage": "https://github.com/QQSHI13/min-html#readme",
   "optionalDependencies": {
-    "@minhtml/node-darwin-arm64": "0.18.2",
-    "@minhtml/node-darwin-x64": "0.18.2",
-    "@minhtml/node-linux-arm64": "0.18.2",
-    "@minhtml/node-linux-x64": "0.18.2",
-    "@minhtml/node-win32-x64": "0.18.2"
+    "@minhtml/node-darwin-arm64": "0.18.3",
+    "@minhtml/node-darwin-x64": "0.18.3",
+    "@minhtml/node-linux-arm64": "0.18.3",
+    "@minhtml/node-linux-x64": "0.18.3",
+    "@minhtml/node-win32-x64": "0.18.3"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

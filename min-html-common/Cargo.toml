@@ -4,7 +4,7 @@ description = "Common code and data for min-html*"
 license = "MIT"
 homepage = "https://github.com/QQSHI13/min-html"
 repository = "https://github.com/QQSHI13/min-html.git"
-version = "0.0.3"
+version = "0.0.4"
 authors = ["QQSHI13"]
 edition = "2018"
 
