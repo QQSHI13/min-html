@@ -93,8 +93,17 @@ jobs:
         working-directory: ./min-html-java
         env:
           SONATYPE_GPG_PRIVATE_KEY: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.SONATYPE_GPG_PASSPHRASE }}
         run: |
-          echo "$SONATYPE_GPG_PRIVATE_KEY" | gpg --allow-secret-key-import --import
+          if [ -n "$MAVEN_GPG_PASSPHRASE" ]; then
+            echo "$SONATYPE_GPG_PRIVATE_KEY" | gpg --batch --yes --pinentry-mode loopback --passphrase "$MAVEN_GPG_PASSPHRASE" --import
+          else
+            echo "$SONATYPE_GPG_PRIVATE_KEY" | gpg --batch --yes --allow-secret-key-import --import
+          fi
+          FINGERPRINT=$(gpg --list-secret-keys --with-colons --fingerprint | awk -F: '/^fpr:/ {print $10; exit}')
+          if [ -n "$FINGERPRINT" ]; then
+            echo -e "5\ny\n" | gpg --batch --command-fd 0 --edit-key "$FINGERPRINT" trust quit
+          fi
           mkdir -p "$HOME/.m2"
           cat << 'EOF' > "$HOME/.m2/settings.xml"
           <settings>

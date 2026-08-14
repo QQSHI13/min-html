@@ -1,6 +1,6 @@
 [package]
 publish = false
-name = "min-html-ruby"
+name = "min_html"
 version = "0.18.2"
 authors = ["QQSHI13"]
 edition = "2018"
