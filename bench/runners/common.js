@@ -43,19 +43,24 @@ module.exports = {
           fs.readdirSync(inputDir).map(async (name) => {
             const src = fs.readFileSync(path.join(inputDir, name));
 
-            const out = await Promise.resolve(minifierFn(src));
-            const len = Buffer.from(out).length;
-            if (outputDir) {
-              fs.writeFileSync(path.join(outputDir, name), out);
-            }
+            try {
+              const out = await Promise.resolve(minifierFn(src));
+              const len = Buffer.from(out).length;
+              if (outputDir) {
+                fs.writeFileSync(path.join(outputDir, name), out);
+              }
 
-            const start = process.hrtime.bigint();
-            for (let i = 0; i < iterations; i++) {
-              await Promise.resolve(minifierFn(src));
-            }
-            const elapsed = process.hrtime.bigint() - start;
+              const start = process.hrtime.bigint();
+              for (let i = 0; i < iterations; i++) {
+                await Promise.resolve(minifierFn(src));
+              }
+              const elapsed = process.hrtime.bigint() - start;
 
-            return [name, len, iterations, Number(elapsed) / 1_000_000_000];
+              return [name, len, iterations, Number(elapsed) / 1_000_000_000];
+            } catch (err) {
+              console.warn(`Failed on ${name}: ${err.message}`);
+              return [name, null, iterations, 0];
+            }
           })
         )
       )

@@ -147,11 +147,21 @@ const renderChart = (cfg, width, height) =>
   const res = results.calculate();
   const speedMinifiers = [
     "html-minifier-next",
+    "html-minifier-terser",
+    "htmlnano",
+    "@swc/html",
     "minimize",
     "min-html",
     "min-html-onepass",
   ];
-  const sizeMinifiers = ["minimize", "html-minifier-next", "min-html"];
+  const sizeMinifiers = [
+    "minimize",
+    "html-minifier-next",
+    "html-minifier-terser",
+    "htmlnano",
+    "@swc/html",
+    "min-html",
+  ];
   const inputs = Object.keys(res.inputSizes).sort();
 
   await fs.writeFile(
@@ -167,7 +177,10 @@ const renderChart = (cfg, width, height) =>
                 (n) => speedColours[n] ?? defaultSpeedColour
               ),
               data: speedMinifiers.map(
-                (m) => res.minifierAvgOps[m] / res.maxMinifierAvgOps
+                (m) =>
+                  res.minifierAvgOps[m] == null
+                    ? null
+                    : res.minifierAvgOps[m] / res.maxMinifierAvgOps
               ),
             },
           ],
@@ -191,7 +204,9 @@ const renderChart = (cfg, width, height) =>
               backgroundColor: sizeMinifiers.map(
                 (n) => sizeColours[n] ?? defaultSizeColour
               ),
-              data: sizeMinifiers.map((m) => res.minifierAvgReduction[m]),
+              data: sizeMinifiers.map(
+                (m) => res.minifierAvgReduction[m] ?? null
+              ),
             },
           ],
         },
@@ -211,11 +226,11 @@ const renderChart = (cfg, width, height) =>
           labels: inputs,
           datasets: speedMinifiers.map((minifier) => ({
             label: minifier,
-            data: inputs.map(
-              (input) =>
-                res.perInputOps[minifier][input] /
-                res.perInputOps["min-html"][input]
-            ),
+            data: inputs.map((input) => {
+              const num = res.perInputOps[minifier]?.[input];
+              const den = res.perInputOps["min-html"]?.[input];
+              return num == null || den == null ? null : num / den;
+            }),
           })),
         },
         ...breakdownChartOptions(
@@ -236,11 +251,11 @@ const renderChart = (cfg, width, height) =>
           labels: inputs,
           datasets: sizeMinifiers.map((minifier) => ({
             label: minifier,
-            data: inputs.map(
-              (input) =>
-                res.perInputReduction[minifier][input] /
-                res.perInputReduction["min-html"][input]
-            ),
+            data: inputs.map((input) => {
+              const num = res.perInputReduction[minifier]?.[input];
+              const den = res.perInputReduction["min-html"]?.[input];
+              return num == null || den == null ? null : num / den;
+            }),
           })),
         },
         ...breakdownChartOptions("Size reduction, relative to min-html"),

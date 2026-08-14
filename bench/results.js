@@ -31,6 +31,9 @@ module.exports = {
         fs.readFileSync(path.join(RESULTS_DIR, f), "utf8")
       );
       for (const [input, size, iterations, seconds] of data) {
+        if (size === null) {
+          continue;
+        }
         const originalSize = inputSizes[input];
         const ops = 1 / (seconds / iterations);
         const reduction = 1 - size / originalSize;

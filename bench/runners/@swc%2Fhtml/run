@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -Eeuxo pipefail
+
+# @swc/html is much slower than the other minifiers, so use fewer iterations.
+MHB_ITERATIONS=5
+
+node index.js

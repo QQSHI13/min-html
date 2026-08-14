@@ -14,7 +14,7 @@ const tests = {
   "NY Times": "https://www.nytimes.com/",
   Reddit: "https://www.reddit.com/",
   "Stack Overflow": "https://www.stackoverflow.com/",
-  Twitter: "https://twitter.com/",
+  X: "https://x.com/",
   Wikipedia: "https://en.wikipedia.org/wiki/Soil",
 };
 

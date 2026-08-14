@@ -6,6 +6,8 @@ shopt -s nullglob
 
 pushd "$(dirname "$0")" >/dev/null
 
+node generate-unminified.js
+
 pushd runners >/dev/null
 npm i
 

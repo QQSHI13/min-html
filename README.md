@@ -20,7 +20,7 @@ View the [changelog](./CHANGELOG.md) to see the latest updates.
 
 ## Performance
 
-Comparison with [html-minifier-next](https://github.com/j9t/html-minifier-next) and [minimize](https://github.com/Swaagie/minimize), run on the top web pages. [See the breakdown here.](./bench)
+Comparison with [html-minifier-next](https://github.com/j9t/html-minifier-next), [html-minifier-terser](https://github.com/terser/html-minifier-terser), [htmlnano](https://github.com/posthtml/htmlnano), [@swc/html](https://github.com/swc-project/swc), and [minimize](https://github.com/Swaagie/minimize), run on popular web pages and synthetic inputs. [See the breakdown here.](./bench)
 
 <img width="400" alt="Chart showing speed of HTML minifiers" src="./bench/graphs/average-speeds.png"><img width="400" alt="Chart showing compression of HTML minifiers" src="./bench/graphs/average-sizes.png">
 
@@ -60,7 +60,7 @@ minhtml --keep-closing-tags --minify-css /path/to/**/*.html
 
 ```toml
 [dependencies]
-min-html = "0.18.1"
+min-html = "0.18.4"
 ```
 
 ### Use

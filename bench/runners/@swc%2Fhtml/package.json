@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "dependencies": {
+    "@swc/html": "^1.15.0"
+  }
+}

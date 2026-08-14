@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "dependencies": {
+    "cssnano": "^7.0.0",
+    "htmlnano": "^2.1.1",
+    "postcss": "^8.4.0",
+    "terser": "^5.31.0"
+  }
+}
