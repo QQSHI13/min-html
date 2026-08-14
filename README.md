@@ -1,13 +1,13 @@
 <h1>
 min-html
-<img width="24" src="https://wilsonl.in/min-html/icon/cli.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/deno.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/java.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/nodejs.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/python.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/ruby.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/rust.png">
-<img width="24" src="https://wilsonl.in/min-html/icon/wasm.png">
+<img width="24" src="./icon/cli.png">
+<img width="24" src="./icon/deno.png">
+<img width="24" src="./icon/java.png">
+<img width="24" src="./icon/nodejs.png">
+<img width="24" src="./icon/python.png">
+<img width="24" src="./icon/ruby.png">
+<img width="24" src="./icon/rust.png">
+<img width="24" src="./icon/wasm.png">
 </h1>
 
 A Rust HTML minifier meticulously optimised for speed and effectiveness, with bindings for other languages.
@@ -29,7 +29,7 @@ The [onepass](https://github.com/QQSHI13/min-html/tree/master/min-html-onepass) 
 ## Compatibility and usage
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/cli.png"> <strong>CLI</strong></summary>
+<summary><img width="24" src="./icon/cli.png"> <strong>CLI</strong></summary>
 
 The CLI is called [minhtml](./minhtml).
 Precompiled binaries are available for Linux (ARM64 and x64), macOS (ARM64 and x64), and Windows (x64).
@@ -54,7 +54,7 @@ minhtml --keep-closing-tags --minify-css /path/to/**/*.html
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/rust.png"> <strong>Rust</strong></summary>
+<summary><img width="24" src="./icon/rust.png"> <strong>Rust</strong></summary>
 
 ### Get
 
@@ -70,7 +70,7 @@ Check out the [docs](https://docs.rs/min-html) for API and usage examples.
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/deno.png"> <strong>Deno</strong></summary>
+<summary><img width="24" src="./icon/deno.png"> <strong>Deno</strong></summary>
 
 - Package: [@minhtml/deno](https://jsr.io/@minhtml/deno/)
 - Binding: [WASM](https://webassembly.org/)
@@ -102,7 +102,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/nodejs.png"> <strong>Node.js</strong></summary>
+<summary><img width="24" src="./icon/nodejs.png"> <strong>Node.js</strong></summary>
 
 - Package: [@minhtml/node](https://www.npmjs.com/package/@minhtml/node)
 - Binding: [Neon](https://github.com/neon-bindings/neon)
@@ -139,7 +139,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/java.png"> <strong>Java</strong></summary>
+<summary><img width="24" src="./icon/java.png"> <strong>Java</strong></summary>
 
 - Package: [com.qqshi13.minhtml](https://search.maven.org/artifact/com.qqshi13.minhtml/min-html)
 - Binding: [JNI](https://github.com/jni-rs/jni-rs)
@@ -153,7 +153,7 @@ Add as a Maven dependency:
 <dependency>
   <groupId>com.qqshi13.minhtml</groupId>
   <artifactId>min-html</artifactId>
-  <version>0.18.1</version>
+  <version>0.18.2</version>
 </dependency>
 ```
 
@@ -176,7 +176,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/python.png"> <strong>Python</strong></summary>
+<summary><img width="24" src="./icon/python.png"> <strong>Python</strong></summary>
 
 - Package: [min-html](https://pypi.org/project/min-html)
 - Binding: [PyO3](https://github.com/PyO3/pyo3)
@@ -199,7 +199,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/ruby.png"> <strong>Ruby</strong></summary>
+<summary><img width="24" src="./icon/ruby.png"> <strong>Ruby</strong></summary>
 
 - Package: [min_html](https://rubygems.org/gems/min_html)
 - Binding: [rb-sys](https://github.com/oxidize-rb/rb-sys) and [magnus](https://github.com/matsadler/magnus)
@@ -222,7 +222,7 @@ All [`Cfg` fields](https://docs.rs/min-html/latest/min_html/struct.Cfg.html) are
 </details>
 
 <details>
-<summary><img width="24" src="https://wilsonl.in/min-html/icon/wasm.png"> <strong>WASM</strong></summary>
+<summary><img width="24" src="./icon/wasm.png"> <strong>WASM</strong></summary>
 
 - Package: [@minhtml/wasm](https://npmjs.org/package/@minhtml/wasm)
 - Binding: [WASM](https://webassembly.org/)

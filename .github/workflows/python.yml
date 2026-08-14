@@ -27,7 +27,7 @@ permissions:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    environment: pypi
+    environment: pypi${{ matrix.variant }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
