@@ -38,7 +38,14 @@ jobs:
 
       - name: Publish to JSR
         working-directory: ./min-html-wasm
+        if: "${{ steps.version.outputs.VERSION != '0.0.0' }}"
+        shell: bash
         run: |
+          version="${{ steps.version.outputs.VERSION }}"
+          if curl -sf "https://jsr.io/@minhtml/deno/${version}" >/dev/null; then
+            echo "JSR version ${version} already exists, skipping publish."
+            exit 0
+          fi
           # Sadly `jsr` ignores .gitignore files (i.e. our built dist package) and will fail on a dirty repo,
           # contrary to almost every other build/package system.
           # Therefore, we first move to a non-ignored folder.
