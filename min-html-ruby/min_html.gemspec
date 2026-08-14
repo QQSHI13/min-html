@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "min_html"
-  spec.version       = "0.18.1"
+  spec.version       = "0.18.2"
   spec.authors       = ["Wilson Lin"]
   spec.email         = ["code@wilsonl.in"]
   spec.license       = "MIT"

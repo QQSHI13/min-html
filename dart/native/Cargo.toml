@@ -10,4 +10,4 @@ name = "minifyhtml"
 crate-type = ["cdylib"]
 
 [dependencies]
-min-html = { version = "0.18.1", path = "../../min-html" }
+min-html = { version = "0.18.2", path = "../../min-html" }
