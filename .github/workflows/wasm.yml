@@ -48,5 +48,7 @@ jobs:
           # npm refuses to work with symlinks.
           cp ../../README.md .
           if [[ "${{ steps.version.outputs.VERSION }}" != "0.0.0" ]]; then
-            npm publish --provenance --access public --registry https://registry.npmjs.org/
+            if ! npm view . version >/dev/null 2>&1; then
+              npm publish --provenance --access public --registry https://registry.npmjs.org/
+            fi
           fi

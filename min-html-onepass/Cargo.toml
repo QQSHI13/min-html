@@ -19,7 +19,7 @@ ahash = "0.8"
 aho-corasick = "1.1"
 lightningcss = "1.0.0-alpha.68"
 memchr = "2"
-min-html-common = { version = "0.0.4", path = "../min-html-common" }
+min-html-common = { version = "0.0.5", path = "../min-html-common" }
 once_cell = "1.21"
 oxc_allocator = "0.144"
 oxc_codegen = "0.144"

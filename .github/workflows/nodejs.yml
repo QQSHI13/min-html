@@ -65,7 +65,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         working-directory: ./min-html-nodejs/plat-pkg
         shell: bash
-        run: npm publish --provenance --access public --registry https://registry.npmjs.org/
+        run: |
+          if ! npm view . version >/dev/null 2>&1; then
+            npm publish --provenance --access public --registry https://registry.npmjs.org/
+          fi
 
   package:
     runs-on: ubuntu-latest
@@ -90,4 +93,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         working-directory: ./min-html-nodejs
         shell: bash
-        run: npm publish --provenance --access public --registry https://registry.npmjs.org/
+        run: |
+          if ! npm view . version >/dev/null 2>&1; then
+            npm publish --provenance --access public --registry https://registry.npmjs.org/
+          fi

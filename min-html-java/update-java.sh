@@ -2,7 +2,7 @@
 
 # Configuration paths
 RUST_CFG_FILE="../min-html/src/cfg/mod.rs"
-JAVA_CONFIG_FILE="src/main/java/in/wilsonl/minifyhtml/Configuration.java"
+JAVA_CONFIG_FILE="src/main/java/com/qqshi13/minhtml/Configuration.java"
 RUST_LIB_FILE="src/main/rust/lib.rs"
 
 # Function to convert snake_case to camelCase
@@ -67,7 +67,7 @@ while IFS= read -r field; do
     camel_field=$(snake_to_camel "$field")
     getter_name="is$(capitalize "$camel_field")"
 
-    mapping="    $field: env.call_method(*obj, \"$getter_name\", \"()Z\", &[]).unwrap().z().unwrap(),"
+    mapping="    $field: env.call_method(obj, \"$getter_name\", \"()Z\", &[]).unwrap().z().unwrap(),"
 
     rust_mappings="$rust_mappings$mapping\n"
 done <<< "$rust_fields"

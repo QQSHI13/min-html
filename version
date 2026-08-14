@@ -125,14 +125,6 @@ for (const f of ["README.md", "min-html-ruby/ext/min_html/Cargo.toml"]) {
   replaceInFile(f, /^(min-html = )"\d+\.\d+\.\d+"/m, `$1"${NEW_VERSION}"`);
 }
 
-for (const f of ["README.md"]) {
-  replaceInFile(
-    f,
-    /(wilsonl\.in\/min-html\/(?:bin|deno)\/)\d+\.\d+\.\d+/g,
-    `$1${NEW_VERSION}`
-  );
-}
-
 for (const f of ["min-html-java/pom.xml", "README.md"]) {
   replaceInFile(
     f,
