@@ -1,4 +1,4 @@
-package com.qqshi13.minhtml;
+package io.github.qqshi13.minhtml;
 
 import java.io.File;
 import java.io.InputStream;

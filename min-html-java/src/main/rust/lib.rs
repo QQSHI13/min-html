@@ -34,7 +34,7 @@ fn build_cfg(env: &mut JNIEnv, obj: &JObject) -> Cfg {
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_qqshi13_minhtml_MinifyHtml_minifyRs(
+pub extern "system" fn Java_io_github_qqshi13_minhtml_MinifyHtml_minifyRs(
   mut env: JNIEnv,
   _class: JClass,
   input: JString,

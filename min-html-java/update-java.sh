@@ -2,7 +2,7 @@
 
 # Configuration paths
 RUST_CFG_FILE="../min-html/src/cfg/mod.rs"
-JAVA_CONFIG_FILE="src/main/java/com/qqshi13/minhtml/Configuration.java"
+JAVA_CONFIG_FILE="src/main/java/io/github/qqshi13/minhtml/Configuration.java"
 RUST_LIB_FILE="src/main/rust/lib.rs"
 
 # Function to convert snake_case to camelCase

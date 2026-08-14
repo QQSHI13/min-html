@@ -1,4 +1,4 @@
-package com.qqshi13.minhtml;
+package io.github.qqshi13.minhtml;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
