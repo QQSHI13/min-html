@@ -1,5 +1,5 @@
 [package]
-name = "minhtml"
+name = "minhtml-cli"
 description = "[CLI] Extremely fast and smart HTML + JS + CSS minifier"
 version = "0.18.2"
 authors = ["Wilson Lin <code@wilsonl.in>"]
@@ -10,6 +10,10 @@ readme = "README.md"
 keywords = ["html", "compress", "minifier", "js", "css"]
 categories = ["compression", "command-line-utilities", "development-tools::build-utils", "web-programming"]
 repository = "https://github.com/QQSHI13/min-html.git"
+
+[[bin]]
+name = "minhtml"
+path = "src/main.rs"
 
 [dependencies]
 min-html = { version = "0.18.2", path = "../min-html" }

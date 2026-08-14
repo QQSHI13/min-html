@@ -35,7 +35,7 @@ The CLI is called [minhtml](./minhtml).
 Precompiled binaries are available for Linux (ARM64 and x64), macOS (ARM64 and x64), and Windows (x64).
 You can download them in the GitHub release.
 
-If you have Cargo installed, you can also build and install from source: `cargo install minhtml`.
+If you have Cargo installed, you can also build and install from source: `cargo install minhtml-cli`.
 
 ### Use
 

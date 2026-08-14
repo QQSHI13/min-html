@@ -53,4 +53,4 @@ jobs:
 
       - name: Build CLI
         shell: bash
-        run: cargo build -p minhtml
+        run: cargo build -p minhtml-cli
