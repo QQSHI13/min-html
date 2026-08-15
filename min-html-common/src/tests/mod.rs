@@ -307,7 +307,7 @@ pub fn create_common_test_data() -> HashMap<&'static [u8], &'static [u8]> {
   t.insert(b"&nGt;", b"&nGt;");
 
   // Named entities not ending with ';' in attr values are not decoded if immediately
-  // followed by an alphanumeric or `=` character. (See parser for more details.)
+  // followed by an alphanumeric, `=`, or `_` character. (See parser for more details.)
   t.insert(
     br#"<a href="exam ple?&gta=5"></a>"#,
     br#"<a href="exam ple?&gta=5"></a>"#,

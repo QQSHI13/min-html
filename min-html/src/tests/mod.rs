@@ -288,3 +288,14 @@ fn test_html_attributes_still_lowercased() {
     b"<div class=x data-foo=1></div>",
   );
 }
+
+#[test]
+fn test_entity_like_url_query_params_with_underscores() {
+  // Regression for https://github.com/QQSHI13/min-html/issues/43.
+  // Query parameters like `copy_origin` must not be decoded as entities.
+  eval_with_cfg(
+    br#"<a href="/example?attribute=something&copy_something=1&reg_something=1"></a>"#,
+    br#"<a href="/example?attribute=something&amp;copy_something=1&amp;reg_something=1"></a>"#,
+    &Cfg::new(),
+  );
+}

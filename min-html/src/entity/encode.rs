@@ -49,7 +49,10 @@ pub fn encode_entities(
               0
             }
             _ => {
-              if must_end_with_semicolon {
+              let next = code.get(len);
+              let needs_semicolon = must_end_with_semicolon
+                || (in_attr_val && next.is_some_and(|&c| c.is_ascii_alphanumeric() || c == b'_'));
+              if needs_semicolon {
                 res.extend_from_slice(b"&amp;");
               } else {
                 res.extend_from_slice(b"&amp");

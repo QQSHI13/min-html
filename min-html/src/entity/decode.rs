@@ -113,14 +113,13 @@ fn parse_entity(code: &[u8], in_attr_val: bool) -> ParsedEntity {
         6,
       ),
       EntityType::Named(decoded) => {
+        let next = code.get(match_len);
         if in_attr_val
           && code[match_len - 1] != b';'
-          && code
-            .get(match_len)
-            .filter(|&&c| ALPHANUMERIC_OR_EQUALS[c])
-            .is_some()
+          && next.is_some_and(|&c| ALPHANUMERIC_OR_EQUALS[c] || c == b'_')
         {
-          // Don't decode if named entity is inside an attribute value and doesn't end with semicolon but is followed by an alphanumeric or `=` character.
+          // Don't decode if named entity is inside an attribute value and doesn't end with semicolon but is followed by an alphanumeric, `=`, or `_` character.
+          // The underscore case matters for URLs/query parameters (e.g. `&copy_origin=...`).
           // https://html.spec.whatwg.org/multipage/parsing.html#named-character-reference-state.
           ParsedEntity {
             read_len: match_len,
