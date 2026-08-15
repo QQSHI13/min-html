@@ -249,6 +249,28 @@ fn test_style_attr_minification() {
   );
   // `style` attributes are removed if fully minified away.
   eval_with_css_min(br#"<div style="  /*  */   "></div>"#, br#"<div></div>"#);
+  // `background-image` must stay as a longhand; collapsing it to `background`
+  // would override other `background-*` properties in external CSS.
+  eval_with_css_min(
+    br#"<div style="background-image: url('x.jpg')"></div>"#,
+    br#"<div style=background-image:url(x.jpg)></div>"#,
+  );
+  eval_with_css_min(
+    br#"<div style="background-image: url('x.jpg'); background-position: center"></div>"#,
+    br#"<div style=background-image:url(x.jpg);background-position:50%></div>"#,
+  );
+  eval_with_css_min(
+    br#"<div style="background-image: url('x.jpg'); background-size: cover"></div>"#,
+    br#"<div style=background-image:url(x.jpg);background-size:cover></div>"#,
+  );
+  eval_with_css_min(
+    br#"<div style="background-image: url('x.jpg'); background-color: red"></div>"#,
+    br#"<div style=background-color:red;background-image:url(x.jpg)></div>"#,
+  );
+  eval_with_css_min(
+    br#"<div style="background-image: url('{{ slide.thumb.src }}')"></div>"#,
+    br#"<div style='background-image:url("{{ slide.thumb.src }}")'></div>"#,
+  );
 }
 
 #[test]
