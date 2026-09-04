@@ -43,6 +43,7 @@ pub fn minify_js(cfg: &Cfg, mode: TopLevelMode, out: &mut Vec<u8>, code: &[u8]) 
         // Use CompressOptions::safest() instead of default() to avoid overly aggressive dead code elimination
         let _minifier_ret = Minifier::new(MinifierOptions {
           mangle: Some(MangleOptions::default()),
+          mangle_properties: None,
           compress: Some(CompressOptions::safest()),
         })
         .minify(&allocator, &mut program);
