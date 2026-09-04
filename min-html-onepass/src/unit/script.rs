@@ -68,6 +68,7 @@ pub fn process_script(
           // Use CompressOptions::safest() instead of default() to avoid overly aggressive dead code elimination
           let minifier_options = MinifierOptions {
             mangle: Some(MangleOptions::default()),
+            mangle_properties: None,
             compress: Some(CompressOptions::safest()),
           };
           let _minifier_ret = Minifier::new(minifier_options).minify(&allocator, &mut program);
