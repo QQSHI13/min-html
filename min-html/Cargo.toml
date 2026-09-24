@@ -25,7 +25,7 @@ oxc_allocator = "0.147"
 oxc_codegen = "0.147"
 oxc_minifier = "0.147"
 oxc_parser = "0.147"
-oxc_span = "0.147"
+oxc_span = "0.151"
 
 [features]
 default = ["lightningcss"]
