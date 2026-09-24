@@ -48,7 +48,7 @@ jobs:
         cp ./README.md ./min-html-ruby/.
 
     - name: Set up Ruby and Rust
-      uses: oxidize-rb/actions/setup-ruby-and-rust@v1.4.4
+      uses: oxidize-rb/actions/setup-ruby-and-rust@v1.5.0
       with:
         ruby-version: "4.0"
         bundler-cache: false
@@ -58,7 +58,7 @@ jobs:
 
     - name: Cross compile
       id: gem
-      uses: oxidize-rb/actions/cross-gem@v1.4.4
+      uses: oxidize-rb/actions/cross-gem@v1.5.0
       with:
         platform: ${{ matrix.platform }}
         ruby-versions: "3.3,3.4,4.0"
