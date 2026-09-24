@@ -24,7 +24,7 @@ once_cell = "1.21"
 oxc_allocator = "0.147"
 oxc_codegen = "0.147"
 oxc_minifier = "0.147"
-oxc_parser = "0.147"
+oxc_parser = "0.151"
 oxc_span = "0.147"
 
 [features]
