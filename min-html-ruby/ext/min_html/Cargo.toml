@@ -10,4 +10,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 min-html = { path = "../../../min-html" }
-magnus = "0.8"
+magnus = "0.9"
