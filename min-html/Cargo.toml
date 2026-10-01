@@ -23,7 +23,7 @@ min-html-common = { version = "0.0.5", path = "../min-html-common" }
 once_cell = "1.21"
 oxc_allocator = "0.147"
 oxc_codegen = "0.147"
-oxc_minifier = "0.147"
+oxc_minifier = "0.152"
 oxc_parser = "0.147"
 oxc_span = "0.147"
 
